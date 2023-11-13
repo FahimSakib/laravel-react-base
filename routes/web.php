@@ -40,5 +40,20 @@ require __DIR__ . '/auth.php';
 // 
 Route::get('home', function () {
     return Inertia::render('Home/Index');
-});
+})->name('home');
+
+Route::get('home/home', function () {
+    return Inertia::render('Home/Index');
+})->name('home.two');
 // 
+
+
+Route::get('product', function () {
+    $data = 'product index';
+    return Inertia::render('Home/Index', compact('data'));
+})->name('product.index');
+
+Route::get('product/create', function () {
+    $data = 'product create';
+    return Inertia::render('Home/Index', compact('data'));
+})->name('product.create');

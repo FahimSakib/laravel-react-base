@@ -1,10 +1,13 @@
 import Layout from '@/Shared/Layout'
+import { usePage } from '@inertiajs/react'
 import React from 'react'
 
 const Index = () => {
-    return (
-        <div className="bg-gray-100">
+    const { data } = usePage().props
 
+    return (
+        <div className="">
+            {data ? data : ''}
         </div>
     )
 }

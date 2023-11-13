@@ -5,14 +5,13 @@ import SideNav from './SideNav'
 
 const Layout = ({ children, title }) => {
     const [sideNavShow, setSideNavShow] = useState(true)
-    // console.log(sideNavShow)
+
     return (
-        <div className="">
+        <div className="bg-[#fffefe]">
             <Head title={title} />
             <Header sideNavShow={sideNavShow} setSideNavShow={setSideNavShow} />
-            {/* {sideNavShow ? 'true' : 'false'} */}
             {sideNavShow && <SideNav />}
-            <div className={`bg-[#fafbfc] p-5 mt-[50px] ${sideNavShow ? 'md:ml-[224px] md:rounded-tl-[25px]' : ''}`}>
+            <div className={`p-5 mt-[50px] ${sideNavShow ? 'md:ml-[256px]' : ''}`}>
                 {children}
             </div>
         </div>

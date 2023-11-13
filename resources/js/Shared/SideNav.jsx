@@ -1,17 +1,38 @@
+import ComputerDesktop from '@/Components/Icons/ComputerDesktop'
 import Home from '@/Components/Icons/Home'
-import React from 'react'
+import { Link } from '@inertiajs/react'
+import SingleNavLink from './Components/SingleNavLink'
+import Bars3CenterLeft from '@/Components/Icons/Bars3CenterLeft'
+import { navLinks } from './Components/NavLinks'
+import NavLinkDropdown from './Components/NavLinkDropdown'
 
 const SideNav = () => {
     return (
-        <div className="w-56 p-3 fixed left-0 top-[50px] hidden md:block">
-            <ul className="space-y-6">
-                <li className="p-2 rounded-lg flex h-20 hover:bg-gray-100"><Home /> Home</li>
-                <li className="p-2 rounded-lg hover:bg-gray-100">Home</li>
-                <li className="p-2 rounded-lg hover:bg-gray-100">Home</li>
-                <li className="p-2 rounded-lg hover:bg-gray-100">Home</li>
-                <li className="p-2 rounded-lg hover:bg-gray-100">Home</li>
-            </ul>
-        </div>
+        <div className="w-64 min-h-[92%] max-h-[95%] p-3 pt-10 fixed left-0 top-[50px] hidden md:block border-r overflow-y-auto" >
+            <div className="flex flex-col space-y-3">
+                {navLinks.map((navLink, index) => {
+                    if (navLink.subLinks) {
+                        return (
+                            <NavLinkDropdown
+                                label={navLink.label}
+                                parentRouteName={navLink.parentRouteName}
+                                icon={navLink.icon}
+                                subLinks={navLink.subLinks}
+                                key={index}
+                            />
+                        )
+                    }
+                    return (
+                        <SingleNavLink
+                            label={navLink.label}
+                            routeName={navLink.routeName}
+                            icon={navLink?.icon}
+                            className={navLink?.className}
+                            key={index}
+                        />)
+                })}
+            </div>
+        </div >
     )
 }
 
