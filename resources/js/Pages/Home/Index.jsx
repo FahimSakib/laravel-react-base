@@ -6,7 +6,7 @@ const Index = () => {
     const { data } = usePage().props
 
     return (
-        <div className="">
+        <div className="min-h-[1200px]">
             {data ? data : ''}
         </div>
     )

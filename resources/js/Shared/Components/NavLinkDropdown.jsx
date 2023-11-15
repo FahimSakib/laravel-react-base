@@ -8,16 +8,23 @@ export default function NavLinkDropdown({ label = 'label', parentRouteName = '/'
     return (
         <div>
             <button
-                className={'flex w-full p-2 gap-2 rounded-md items-center hover:bg-gray-200/75 ' + (route().current(parentRouteName) ? 'bg-gray-200/75 ' : ' ') + className}
+                className={
+                    'flex w-full p-2 gap-2 rounded-md items-center hover:bg-gray-200/75 dark:hover:bg-white/5 '
+                    + (route().current(parentRouteName) ? 'bg-gray-200/75 dark:bg-white/5 ' : ' ')
+                    + className
+                }
                 onClick={() => setOpen(prev => !prev)}
             >
                 <span
-                    className={route().current(parentRouteName) ? 'text-[#6366f1] ' : 'text-[#6c737f] '}
+                    className={route().current(parentRouteName) ? 'text-[#6366f1] ' : 'text-[#6c737f] dark:text-[#9da4ae] '}
                 >
                     {icon}
                 </span>
                 <span
-                    className={'flex font-semibold justify-between w-full items-center ' + (route().current(parentRouteName) ? 'text-black ' : 'text-[#6c737f] ')}
+                    className={
+                        'flex font-semibold justify-between w-full items-center '
+                        + (route().current(parentRouteName) ? 'text-black dark:text-[#EDF2F7] ' : 'text-[#6c737f] dark:text-[#9da4ae] ')
+                    }
                 >
                     {label}
                     <Chevron
@@ -31,12 +38,17 @@ export default function NavLinkDropdown({ label = 'label', parentRouteName = '/'
                     {subLinks.map((subLink, index) => (
                         <Link
                             href={route(subLink.routeName)}
-                            className={'flex items-center gap-5 p-2 rounded-md hover:bg-gray-200/75 ' + subLink?.className}
+                            className={'flex items-center gap-5 p-2 rounded-md hover:bg-gray-200/75 dark:hover:bg-white/5 ' + subLink?.className}
                             key={index}
                         >
                             {route().current(subLink.routeName) &&
                                 <span className="rounded-full ml-2 h-[6px] w-[6px] bg-[#6366f1]"></span>}
-                            <span className={'text-sm font-medium ' + (route().current(subLink.routeName) ? 'text-black ' : 'ml-[34px] text-[#6c737f] ')}>
+                            <span
+                                className={
+                                    'text-sm font-medium '
+                                    + (route().current(subLink.routeName) ? 'text-black dark:text-[#EDF2F7] ' : 'ml-[34px] text-[#6c737f] dark:text-[#9da4ae] ')
+                                }
+                            >
                                 {subLink.label}
                             </span>
                         </Link>

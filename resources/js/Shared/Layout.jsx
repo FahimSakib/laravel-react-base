@@ -7,11 +7,11 @@ const Layout = ({ children, title }) => {
     const [sideNavShow, setSideNavShow] = useState(true)
 
     return (
-        <div className="bg-[#fffefe]">
+        <div className="bg-[#fffefe] dark:bg-[#0f1220] dark:text-white">
             <Head title={title} />
             <Header sideNavShow={sideNavShow} setSideNavShow={setSideNavShow} />
             {sideNavShow && <SideNav />}
-            <div className={`p-5 mt-[50px] ${sideNavShow ? 'md:ml-[256px]' : ''}`}>
+            <div className={`p-5 pt-[70px] ${sideNavShow ? 'md:ml-[256px]' : ''}`}>
                 {children}
             </div>
         </div>
