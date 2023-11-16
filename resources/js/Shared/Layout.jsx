@@ -11,7 +11,7 @@ const Layout = ({ children, title }) => {
             <Head title={title} />
             <Header sideNavShow={sideNavShow} setSideNavShow={setSideNavShow} />
             {sideNavShow && <SideNav />}
-            <div className={`p-5 pt-[70px] ${sideNavShow ? 'md:ml-[256px]' : ''}`}>
+            <div className={`p-5 pt-[84px] ${sideNavShow ? 'md:ml-[256px]' : ''}`}>
                 {children}
             </div>
         </div>
