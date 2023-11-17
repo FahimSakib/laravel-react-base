@@ -2,8 +2,9 @@ import Moon from "@/Components/Icons/Moon";
 import User from "@/Components/Icons/User";
 import ToggleButton from "@/Components/ToggleButton";
 import { Link } from "@inertiajs/react";
+import { useEffect } from "react";
 
-export default function UserDropdown({ }) {
+export default function UserDropdown({ setShowUserDropdown }) {
     const toggleDarkMode = (e) => {
         if (e.target.checked) {
             document.documentElement.classList.add('dark')
@@ -11,6 +12,17 @@ export default function UserDropdown({ }) {
             document.documentElement.classList.remove('dark')
         }
     }
+
+    const handleOutsideClick = (event) => {
+        if (!event.target.closest('.user-dropdown-container')) {
+            setShowUserDropdown(false)
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('click', handleOutsideClick)
+        return () => document.removeEventListener('click', handleOutsideClick)
+    }, [])
 
     return (
         <div className="absolute top-12 right-0 w-52 rounded-lg bg-[#fffefe] dark:bg-[#111927] dark:text-[#EDF2F7] shadow-md divide-y dark:divide-[#2F3746]">

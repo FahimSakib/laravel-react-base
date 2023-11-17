@@ -13,7 +13,7 @@ const Header = ({ sideNavShow, setSideNavShow }) => {
                 </button>
                 <img src="/assets/images/demos-logo-png-transparent.png" alt="logo" className="w-[120px] h-[50px] object-cover" />
             </div>
-            <div className="hidden md:flex relative">
+            <div className="hidden md:flex relative user-dropdown-container">
                 <button onClick={() => setShowUserDropdown(prev => !prev)} >
                     <img
                         src="/assets/images/avatar.jpg"
@@ -21,7 +21,7 @@ const Header = ({ sideNavShow, setSideNavShow }) => {
                         className="w-10 h-10 rounded-full p-[2px] ring-1 dark:ring-2"
                     />
                 </button>
-                {showUserDropdown && <UserDropdown />}
+                {showUserDropdown && <UserDropdown setShowUserDropdown={setShowUserDropdown} />}
             </div>
         </div>
     )
