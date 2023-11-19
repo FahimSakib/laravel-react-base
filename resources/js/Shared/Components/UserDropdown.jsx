@@ -1,7 +1,7 @@
 import Moon from "@/Components/Icons/Moon";
 import User from "@/Components/Icons/User";
 import ToggleButton from "@/Components/ToggleButton";
-import { Link } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import { useEffect } from "react";
 
 export default function UserDropdown({ setShowUserDropdown }) {
@@ -24,6 +24,12 @@ export default function UserDropdown({ setShowUserDropdown }) {
         return () => document.removeEventListener('click', handleOutsideClick)
     }, [])
 
+    const visitLink = (url) => {
+        router.visit(url, {
+            onSuccess: () => { setShowUserDropdown(false) }
+        })
+    }
+
     return (
         <div className="absolute top-12 right-0 w-52 rounded-lg bg-[#fffefe] dark:bg-[#111927] dark:text-[#EDF2F7] shadow-md divide-y dark:divide-[#2F3746]">
             <div className="p-4">
@@ -31,8 +37,8 @@ export default function UserDropdown({ setShowUserDropdown }) {
                 <p className="text-sm text-[#6c737f] dark:text-[#9da4ae]">fahim@mail.com</p>
             </div>
             <div className="px-2 py-4">
-                <Link
-                    href=""
+                <button
+                    onClick={() => visitLink(route('home'))}
                     className="flex w-full p-2 gap-3 rounded-md items-center hover:bg-gray-200/75 dark:hover:bg-white/5"
                 >
                     <span className="text-[#6c737f] dark:text-[#9da4ae]">
@@ -41,7 +47,7 @@ export default function UserDropdown({ setShowUserDropdown }) {
                     <span className="text-[#6c737f] dark:text-[#9da4ae]">
                         Profile
                     </span>
-                </Link>
+                </button>
                 <span className="flex w-full p-2 gap-3 rounded-md items-center">
                     <span className="text-[#6c737f] dark:text-[#9da4ae]">
                         <Moon />
@@ -51,6 +57,11 @@ export default function UserDropdown({ setShowUserDropdown }) {
                     </span>
                     <ToggleButton handleOnChange={toggleDarkMode} size="small" className="ml-auto" />
                 </span>
+            </div>
+            <div className="p-2">
+                <button className="w-full p-2 gap-3 rounded-md text-[#6c737f] dark:text-[#9da4ae] hover:bg-gray-200/75 dark:hover:bg-white/5">
+                    Logout
+                </button>
             </div>
         </div>
     )
