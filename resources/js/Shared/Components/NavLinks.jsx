@@ -5,7 +5,7 @@ import ShoppingBag from "@/Components/Icons/ShoppingBag";
 export const navLinks = [
     {
         label: 'Dashboard',
-        routeName: 'home',
+        routeName: 'dashboard',
         icon: <ComputerDesktop />,
     },
     {

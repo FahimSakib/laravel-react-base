@@ -4,7 +4,7 @@ import NavLinkDropdown from './Components/NavLinkDropdown'
 
 const SideNav = () => {
     return (
-        <div className="w-64 min-h-[92%] max-h-[95%] px-3 py-10 fixed left-0 top-16 hidden md:block border-r dark:border-[#2F3746] overflow-y-auto dark:bg-[#0f1220]" >
+        <div className="w-64 min-h-[92%] max-h-[95%] px-3 py-5 fixed left-0 top-16 hidden md:block border-r dark:border-[#2F3746] overflow-y-auto dark:bg-[#0f1220]" >
             <div className="flex flex-col space-y-3">
                 {navLinks.map((navLink, index) => {
                     if (navLink.subLinks) {

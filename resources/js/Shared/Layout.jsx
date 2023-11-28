@@ -14,7 +14,7 @@ const Layout = ({ children, title }) => {
             <Header sideNavShow={sideNavShow} setSideNavShow={setSideNavShow} setMobileSideNavShow={setMobileSideNavShow} />
             {sideNavShow && <SideNav />}
             {mobileSideNavShow && <MobileSideNav setMobileSideNavShow={setMobileSideNavShow} />}
-            <div className={`p-5 pt-[84px] ${sideNavShow ? 'md:ml-[256px]' : ''}`}>
+            <div className={`p-5 pt-[84px] min-h-screen ${sideNavShow ? 'md:ml-[256px]' : ''}`}>
                 {children}
             </div>
         </div>
