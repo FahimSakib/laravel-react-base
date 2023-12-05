@@ -57,3 +57,10 @@ Route::get('product/create', function () {
     $data = 'product create';
     return Inertia::render('Home/Index', compact('data'));
 })->name('product.create');
+
+
+// custom auth
+Route::get('login', function () {
+    return Inertia::render('CustomAuth/Login');
+});
+// custom auth
