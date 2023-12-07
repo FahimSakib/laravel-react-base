@@ -1,15 +1,27 @@
 import Moon from "@/Components/Icons/Moon";
 import User from "@/Components/Icons/User";
 import ToggleButton from "@/Components/ToggleButton";
-import { Link, router } from "@inertiajs/react";
-import { useEffect } from "react";
+import { Link, router, usePage } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 
 export default function UserDropdown({ setShowUserDropdown }) {
+    const { auth } = usePage().props
+    const [darkMode, SetDarkMode] = useState(auth?.user?.dark_mode || false)
+
     const toggleDarkMode = (e) => {
+        SetDarkMode(prev => !prev)
+
         if (e.target.checked) {
             document.documentElement.classList.add('dark')
         } else {
             document.documentElement.classList.remove('dark')
+        }
+
+        if (auth && auth.user) {
+            router.patch(route('update.dark.mode'), { dark_mode: e.target.checked }, {
+                preserveScroll: true,
+                preserveState: true,
+            })
         }
     }
 
@@ -55,7 +67,7 @@ export default function UserDropdown({ setShowUserDropdown }) {
                     <span className="text-[#6c737f] dark:text-[#9da4ae]">
                         Dark Mode
                     </span>
-                    <ToggleButton handleOnChange={toggleDarkMode} size="small" className="ml-auto" />
+                    <ToggleButton handleOnChange={toggleDarkMode} size="small" className="ml-auto" checked={darkMode} />
                 </span>
             </div>
             <div className="p-2">

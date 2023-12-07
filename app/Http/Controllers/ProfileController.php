@@ -60,4 +60,9 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function updateDarkMode(Request $request)
+    {
+        $request->user()->update($request->all());
+    }
 }

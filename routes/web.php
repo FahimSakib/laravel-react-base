@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Dashboard/Index');
     })->name('dashboard');
 
+    Route::patch('update-dark-mode', [ProfileController::class, 'updateDarkMode'])->name('update.dark.mode');
+
     Route::get('product', function () {
         $data = 'product index';
         return Inertia::render('Home/Index', compact('data'));
