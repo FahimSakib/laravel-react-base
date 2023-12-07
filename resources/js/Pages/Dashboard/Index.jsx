@@ -122,5 +122,5 @@ const Index = () => {
     )
 }
 
-Index.layout = page => <Layout children={page} title="Home" />
+Index.layout = page => <Layout children={page} title="Dashboard" />
 export default Index

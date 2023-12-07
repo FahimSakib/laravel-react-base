@@ -1,5 +1,4 @@
 import ComputerDesktop from "@/Components/Icons/ComputerDesktop";
-import Home from "@/Components/Icons/Home";
 import ShoppingBag from "@/Components/Icons/ShoppingBag";
 
 export const navLinks = [
@@ -7,11 +6,6 @@ export const navLinks = [
         label: 'Dashboard',
         routeName: 'dashboard',
         icon: <ComputerDesktop />,
-    },
-    {
-        label: 'Dashboard',
-        routeName: 'home.two',
-        icon: <Home />,
     },
     {
         label: 'Product',

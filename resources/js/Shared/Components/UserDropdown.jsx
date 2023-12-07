@@ -1,7 +1,7 @@
 import Moon from "@/Components/Icons/Moon";
 import User from "@/Components/Icons/User";
 import ToggleButton from "@/Components/ToggleButton";
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { useEffect } from "react";
 
 export default function UserDropdown({ setShowUserDropdown }) {
@@ -59,9 +59,14 @@ export default function UserDropdown({ setShowUserDropdown }) {
                 </span>
             </div>
             <div className="p-2">
-                <button className="w-full p-2 gap-3 rounded-md text-[#6c737f] dark:text-[#9da4ae] hover:bg-gray-200/75 dark:hover:bg-white/5">
+                <Link
+                    href={route('logout')}
+                    method="post"
+                    as="button"
+                    className="w-full p-2 gap-3 rounded-md text-[#6c737f] dark:text-[#9da4ae] hover:bg-gray-200/75 dark:hover:bg-white/5"
+                >
                     Logout
-                </button>
+                </Link>
             </div>
         </div>
     )
