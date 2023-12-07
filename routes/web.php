@@ -62,5 +62,5 @@ Route::get('product/create', function () {
 // custom auth
 Route::get('login', function () {
     return Inertia::render('CustomAuth/Login');
-});
+})->name('login');
 // custom auth
