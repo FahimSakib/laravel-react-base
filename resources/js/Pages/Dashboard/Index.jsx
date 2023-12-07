@@ -1,17 +1,20 @@
 import ArrowSmallRight from '@/Components/Icons/ArrowSmallRight'
 import Layout from '@/Shared/Layout'
+import { usePage } from '@inertiajs/react'
 import React from 'react'
 
 const Index = () => {
+    const { auth } = usePage().props
+
     return (
         <div className="max-w-7xl mx-auto mt-8 dark:text-[#edf2e7]">
             <h4 className="text-2xl md:text-3xl font-bold">Dashboard</h4>
             <div className="flex flex-col md:flex-row mt-8 gap-6">
                 <div className="flex flex-col-reverse md:flex-row justify-between w-full md:w-2/3 rounded-2xl px-8 py-4 bg-[#f5f7ff] dark:bg-[#312e81]">
                     <div className="my-auto">
-                        <h5 className="text-2xl font-bold leading-relaxed">
+                        <h5 className="text-2xl font-bold leading-relaxed capitalize">
                             Welcome back <span className="">&#128075;</span> <br />
-                            Fahim Sakib
+                            {auth?.user?.name}
                         </h5>
                         <p className="text-sm font-semibold mt-4">What are you managing today?</p>
                         <button className="mt-8 px-5 py-2 text-white font-semibold rounded-xl bg-[#6366f1]">Demo Button</button>

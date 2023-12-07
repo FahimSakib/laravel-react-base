@@ -45,8 +45,8 @@ export default function UserDropdown({ setShowUserDropdown }) {
     return (
         <div className="absolute top-12 right-0 w-52 rounded-lg bg-[#fffefe] dark:bg-[#111927] dark:text-[#EDF2F7] shadow-md divide-y dark:divide-[#2F3746]">
             <div className="p-4">
-                <p className="capitalize">fahim sakib</p>
-                <p className="text-sm text-[#6c737f] dark:text-[#9da4ae]">fahim@mail.com</p>
+                <p className="capitalize">{auth?.user?.name}</p>
+                <p className="text-sm text-[#6c737f] dark:text-[#9da4ae]">{auth?.user?.email}</p>
             </div>
             <div className="px-2 py-4">
                 <button
