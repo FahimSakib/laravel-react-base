@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserManagementController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,6 +24,7 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     Route::patch('update-dark-mode', [ProfileController::class, 'updateDarkMode'])->name('update.dark.mode');
+    Route::resource('users', UserManagementController::class);
 
     Route::get('product', function () {
         $data = 'product index';

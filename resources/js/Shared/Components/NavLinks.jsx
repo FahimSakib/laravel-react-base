@@ -1,5 +1,6 @@
 import ComputerDesktop from "@/Components/Icons/ComputerDesktop";
 import ShoppingBag from "@/Components/Icons/ShoppingBag";
+import Users from "@/Components/Icons/Users";
 
 export const navLinks = [
     {
@@ -21,5 +22,20 @@ export const navLinks = [
                 routeName: 'product.create'
             }
         ]
-    }
+    },
+    {
+        label: 'Users',
+        parentRouteName: 'users.*', //for opening dropdown dynamically if any sub menu active (use primary common name then ".*")
+        icon: <Users />,
+        subLinks: [
+            {
+                label: 'List',
+                routeName: 'users.index',
+            },
+            {
+                label: 'Create',
+                routeName: 'users.create'
+            }
+        ]
+    },
 ]

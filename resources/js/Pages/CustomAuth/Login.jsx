@@ -10,19 +10,19 @@ const Login = () => {
         email: '',
         password: '',
         remember: false,
-    });
+    })
 
     useEffect(() => {
         return () => {
-            reset('password');
-        };
-    }, []);
+            reset('password')
+        }
+    }, [])
 
     const submit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        post(route('login'));
-    };
+        post(route('login'))
+    }
 
     return (
         <div className="flex bg-[#fffefe] dark:bg-[#0f1220] dark:text-[#edf2e7] w-full min-h-screen">
