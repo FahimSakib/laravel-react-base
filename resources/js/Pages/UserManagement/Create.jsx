@@ -15,16 +15,26 @@ const Create = () => {
         phone: '',
         password: '',
         avatar: '',
-        status: true
+        status: 'active'
     })
-
-    // console.log(data)
-    // console.log(avatarUrl)
 
     const handleAvatarChange = (e) => {
         const file = e.target.files[0]
         setData('avatar', file)
-        setAvatarUrl(URL.createObjectURL(file))
+
+        if (file) {
+            setAvatarUrl(URL.createObjectURL(file))
+        } else {
+            setAvatarUrl('')
+        }
+    }
+
+    const submit = (e) => {
+        e.preventDefault()
+
+        post(route('users.store'), {
+            preserveScroll: true
+        })
     }
 
     return (
@@ -50,22 +60,22 @@ const Create = () => {
                                 />
                             </label>
                         </div>
-                        <p className="text-xs text-center text-[#6c737f] dark:text-[#a0aec0]">
+                        <p className={'text-xs text-center ' + (errors.avatar ? 'text-red-500' : 'text-[#6c737f] dark:text-[#a0aec0] ')}>
                             Allowed *.jpeg, *.jpg, *.png (REC: 120X120 px) <br />
-                            max size of 3.1 MB
+                            max size of 2 MB
                         </p>
                     </div>
                     <div className="flex justify-between items-center mt-10 md:mt-14">
                         <p className="font-medium">Active</p>
                         <ToggleButton
                             size="small"
-                            checked={data.status}
-                            handleOnChange={(e) => setData('status', e.target.checked)}
+                            checked={data.status === 'active'}
+                            handleOnChange={(e) => setData('status', e.target.checked ? 'active' : 'inactive')}
                         />
                     </div>
                 </div>
                 <div className="w-full md:w-2/3 p-8 rounded-2xl shadow dark:bg-[#111927]">
-                    <form className="space-y-5">
+                    <form className="space-y-5" onSubmit={submit}>
                         <div>
                             <TextInput
                                 label="Name"
@@ -123,7 +133,6 @@ const Create = () => {
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     )
