@@ -46,9 +46,9 @@ class UserManagementController extends Controller
             $data['avatar'] = $this->upload_file($request->file('avatar'), 'avatars', $fileName);
         }
 
-        $user = User::create($data);
-        dd($user);
-        dd($data);
+        User::create($data);
+
+        return redirect()->back()->with('success', 'User created successfully');
     }
 
     public function show(string $id)

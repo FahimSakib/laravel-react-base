@@ -33,7 +33,11 @@ const Create = () => {
         e.preventDefault()
 
         post(route('users.store'), {
-            preserveScroll: true
+            preserveScroll: true,
+            onSuccess: () => {
+                reset()
+                setAvatarUrl('')
+            },
         })
     }
 

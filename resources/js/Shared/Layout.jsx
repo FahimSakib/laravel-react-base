@@ -3,11 +3,23 @@ import { Head, usePage } from '@inertiajs/react'
 import Header from './Header'
 import SideNav from './SideNav'
 import MobileSideNav from './MobileSideNav'
+import toast from 'react-hot-toast'
 
 const Layout = ({ children, title }) => {
-    const { auth } = usePage().props
+    const { auth, flash } = usePage().props
     const [sideNavShow, setSideNavShow] = useState(true)
     const [mobileSideNavShow, setMobileSideNavShow] = useState(false)
+
+    useEffect(() => {
+        if (flash) {
+            if (flash.success) {
+                toast.success(flash.success)
+            }
+            if (flash.error) {
+                toast.error(flash.error)
+            }
+        }
+    }, [flash.success, flash.error])
 
     useEffect(() => {
         if (auth && auth.user) {
