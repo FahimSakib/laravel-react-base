@@ -1,6 +1,6 @@
-import Checkbox from '@/Components/Form/Checkbox'
 import PlusSolid from '@/Components/Icons/PlusSolid'
 import Table from '@/Components/Table/Table'
+import TableCheckbox from '@/Components/Table/TableCheckbox'
 import Tbody from '@/Components/Table/Tbody'
 import Td from '@/Components/Table/Td'
 import Th from '@/Components/Table/Th'
@@ -27,39 +27,40 @@ const Index = () => {
                 <Table>
                     <Thead>
                         <Th type='checkbox'>
-                            <Checkbox />
+                            <TableCheckbox />
                         </Th>
                         <Th>
-                            Hello 2
+                            Hello2
                         </Th>
                         <Th>
-                            Hello 3
+                            Hello3
                         </Th>
                         <Th>
-                            Hello 4
+                            Hello4
                         </Th>
                     </Thead>
                     <Tbody>
                         <Tr>
                             <Td type='checkbox'>
-                                <Checkbox />
+                                <TableCheckbox />
                             </Td>
                             <Td>
-                                Two
+                                but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                             </Td>
                             <Td>
-                                Three
+                                but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                             </Td>
                             <Td>
                                 Four
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td>
-                                O
+                            <Td type='checkbox'>
+                                <TableCheckbox />
                             </Td>
                             <Td>
-                                Two
+                                Two <br />
+                                helo
                             </Td>
                             <Td>
                                 Three
