@@ -15,7 +15,9 @@ class UserManagementController extends Controller
 
     public function index()
     {
-        return Inertia::render('UserManagement/Index');
+        $users = User::all();
+
+        return Inertia::render('UserManagement/Index', compact('users'));
     }
 
     public function create()

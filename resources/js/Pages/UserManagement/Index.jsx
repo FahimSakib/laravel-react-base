@@ -7,10 +7,13 @@ import Th from '@/Components/Table/Th'
 import Thead from '@/Components/Table/Thead'
 import Tr from '@/Components/Table/Tr'
 import Layout from '@/Shared/Layout'
-import { Link } from '@inertiajs/react'
+import { Link, usePage } from '@inertiajs/react'
 import React from 'react'
+import UserAvatar from './Components/UserAvatar'
 
 const Index = () => {
+    const { users } = usePage().props
+
     return (
         <div className="max-w-7xl mx-auto mt-8 dark:text-[#edf2e7]">
             <div className="flex justify-between items-center">
@@ -30,87 +33,39 @@ const Index = () => {
                             <TableCheckbox />
                         </Th>
                         <Th>
-                            Hello2
+                            Name
                         </Th>
                         <Th>
-                            Hello3
+                            Phone
                         </Th>
                         <Th>
-                            Hello4
+                            Status
+                        </Th>
+                        <Th>
+                            Actions
                         </Th>
                     </Thead>
                     <Tbody>
-                        <Tr>
-                            <Td type='checkbox'>
-                                <TableCheckbox />
-                            </Td>
-                            <Td>
-                                but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                            </Td>
-                            <Td>
-                                but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                            </Td>
-                            <Td>
-                                Four
-                            </Td>
-                        </Tr>
-                        <Tr>
-                            <Td type='checkbox'>
-                                <TableCheckbox />
-                            </Td>
-                            <Td>
-                                Two <br />
-                                helo
-                            </Td>
-                            <Td>
-                                Three
-                            </Td>
-                            <Td>
-                                Four
-                            </Td>
-                        </Tr>
-                        <Tr>
-                            <Td>
-                                O
-                            </Td>
-                            <Td>
-                                Two
-                            </Td>
-                            <Td>
-                                Three
-                            </Td>
-                            <Td>
-                                Four
-                            </Td>
-                        </Tr>
-                        <Tr>
-                            <Td>
-                                O
-                            </Td>
-                            <Td>
-                                Two
-                            </Td>
-                            <Td>
-                                Three
-                            </Td>
-                            <Td>
-                                Four
-                            </Td>
-                        </Tr>
-                        <Tr>
-                            <Td>
-                                O
-                            </Td>
-                            <Td>
-                                Two
-                            </Td>
-                            <Td>
-                                Three
-                            </Td>
-                            <Td>
-                                Four
-                            </Td>
-                        </Tr>
+                        {users.map(user => (
+                            <Tr key={user.id}>
+                                <Td type='checkbox'>
+                                    <TableCheckbox />
+                                </Td>
+                                <Td className='flex gap-2 items-center'>
+                                    <UserAvatar user={user} />
+                                    <div>
+                                        <p className="font-semibold">{user.name}</p>
+                                        <p className="text-[#6c737f] dark:text-[#a0aec0]">{user.email}</p>
+                                    </div>
+                                    {/* <img src={} alt="" /> */}
+                                </Td>
+                                <Td>
+                                    {user.phone}
+                                </Td>
+                                <Td>
+                                    {user.status}
+                                </Td>
+                            </Tr>))}
                     </Tbody>
                 </Table>
                 <div className="min-h-[48px]">
