@@ -11,8 +11,9 @@ import { Link, usePage } from '@inertiajs/react'
 import React from 'react'
 import UserAvatar from './Components/UserAvatar'
 import MoreActions from '@/Components/Table/MoreActions'
-import PencilMicroSolid from '@/Components/Icons/PencilSquareMicroSolid'
 import TrashMicroSolid from '@/Components/Icons/TrashMicroSolid'
+import MoreActionsLink from '@/Components/Table/MoreActionsLink'
+import PencilSquareMicroSolid from '@/Components/Icons/PencilSquareMicroSolid'
 
 const Index = () => {
     const { users } = usePage().props
@@ -70,18 +71,17 @@ const Index = () => {
                                 <Td>
                                     <MoreActions id={user.id}>
                                         <div>
-                                            <Link
-                                                href=''
-                                                className="flex w-full p-2 gap-2 rounded-md items-center hover:bg-[#111927]/5 dark:hover:bg-[#f3f4f6]/5"
-                                            >
-                                                <PencilMicroSolid /> Edit
-                                            </Link>
-                                            <Link
-                                                href=''
-                                                className="flex w-full p-2 gap-2 rounded-md items-center hover:bg-[#111927]/5 dark:hover:bg-[#f3f4f6]/5"
-                                            >
-                                                <TrashMicroSolid /> Delete
-                                            </Link>
+                                            <MoreActionsLink
+                                                label="Edit"
+                                                routeName=""
+                                                icon={<PencilSquareMicroSolid />}
+                                            />
+                                            <MoreActionsLink
+                                                label="Delete"
+                                                routeName=""
+                                                icon={<TrashMicroSolid />}
+                                                className="text-[#ff5630]"
+                                            />
                                         </div>
                                     </MoreActions>
                                 </Td>
