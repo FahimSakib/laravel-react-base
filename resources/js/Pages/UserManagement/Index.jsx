@@ -10,6 +10,9 @@ import Layout from '@/Shared/Layout'
 import { Link, usePage } from '@inertiajs/react'
 import React from 'react'
 import UserAvatar from './Components/UserAvatar'
+import MoreActions from '@/Components/Table/MoreActions'
+import PencilMicroSolid from '@/Components/Icons/PencilSquareMicroSolid'
+import TrashMicroSolid from '@/Components/Icons/TrashMicroSolid'
 
 const Index = () => {
     const { users } = usePage().props
@@ -41,7 +44,7 @@ const Index = () => {
                         <Th>
                             Status
                         </Th>
-                        <Th>
+                        <Th className="text-right">
                             Actions
                         </Th>
                     </Thead>
@@ -57,13 +60,30 @@ const Index = () => {
                                         <p className="font-semibold">{user.name}</p>
                                         <p className="text-[#6c737f] dark:text-[#a0aec0]">{user.email}</p>
                                     </div>
-                                    {/* <img src={} alt="" /> */}
                                 </Td>
                                 <Td>
                                     {user.phone}
                                 </Td>
                                 <Td>
                                     {user.status}
+                                </Td>
+                                <Td>
+                                    <MoreActions id={user.id}>
+                                        <div>
+                                            <Link
+                                                href=''
+                                                className="flex w-full p-2 gap-2 rounded-md items-center hover:bg-[#111927]/5 dark:hover:bg-[#f3f4f6]/5"
+                                            >
+                                                <PencilMicroSolid /> Edit
+                                            </Link>
+                                            <Link
+                                                href=''
+                                                className="flex w-full p-2 gap-2 rounded-md items-center hover:bg-[#111927]/5 dark:hover:bg-[#f3f4f6]/5"
+                                            >
+                                                <TrashMicroSolid /> Delete
+                                            </Link>
+                                        </div>
+                                    </MoreActions>
                                 </Td>
                             </Tr>))}
                     </Tbody>
