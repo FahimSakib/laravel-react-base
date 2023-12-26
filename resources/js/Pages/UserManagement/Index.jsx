@@ -73,12 +73,11 @@ const Index = () => {
                                         <div>
                                             <MoreActionsLink
                                                 label="Edit"
-                                                routeName=""
+                                                href={route('users.edit', user.id)}
                                                 icon={<PencilSquareMicroSolid />}
                                             />
                                             <MoreActionsLink
                                                 label="Delete"
-                                                routeName=""
                                                 icon={<TrashMicroSolid />}
                                                 className="text-[#ff5630]"
                                             />
