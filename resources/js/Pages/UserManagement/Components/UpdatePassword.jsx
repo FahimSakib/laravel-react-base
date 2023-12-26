@@ -1,16 +1,28 @@
 import InputError from "@/Components/Form/InputError"
 import TextInput from "@/Components/Form/TextInput"
+import Spiner from "@/Components/Utils/Spiner"
 import { useForm } from "@inertiajs/react"
 
-export default function UpdatePassword({ }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+export default function UpdatePassword({ id }) {
+    const { data, setData, patch, processing, errors, reset } = useForm({
         current_password: '',
         password: '',
         password_confirmation: ''
     })
 
+    const submit = (e) => {
+        e.preventDefault()
+
+        patch(route('users.update.password', id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset()
+            },
+        })
+    }
+
     return (
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={submit}>
             <div>
                 <TextInput
                     label="Current Password"

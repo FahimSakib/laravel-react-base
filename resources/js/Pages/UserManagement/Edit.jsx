@@ -132,7 +132,7 @@ const Edit = () => {
                         </form>
                     </div>
                     <div className="w-full p-8 rounded-2xl shadow dark:bg-[#111927]">
-                        <UpdatePassword />
+                        <UpdatePassword id={user.id} />
                     </div>
                 </div>
             </div>

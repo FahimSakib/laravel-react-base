@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Rules\MatchPassword;
 use App\Traits\Uploadable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -101,5 +102,23 @@ class UserManagementController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function UpdatePassword(Request $request, string $id)
+    {
+        $user = User::find($id);
+
+        $request->validate([
+            'current_password' => ['required', new MatchPassword($user->password)],
+            'password'         => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user->update([
+            'password'         => Hash::make($request->password),
+            'default_password' => false,
+
+        ]);
+
+        return redirect()->back()->with('success', 'Password updated successfully');
     }
 }
