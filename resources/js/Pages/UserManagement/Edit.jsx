@@ -136,6 +136,7 @@ const Edit = () => {
                         {(user.default_password == true) && <InfoBanner
                             text="Please update your password since the one you now use is the default."
                             canHide={false}
+                            className="mb-6"
                         />}
                         <UpdatePassword id={user.id} />
                     </div>

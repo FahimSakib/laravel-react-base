@@ -14,6 +14,7 @@ import MoreActions from '@/Components/Table/MoreActions'
 import TrashMicroSolid from '@/Components/Icons/TrashMicroSolid'
 import MoreActionsLink from '@/Components/Table/MoreActionsLink'
 import PencilSquareMicroSolid from '@/Components/Icons/PencilSquareMicroSolid'
+import DeleteModal from './Components/DeleteModal'
 
 const Index = () => {
     const { users } = usePage().props
@@ -90,6 +91,7 @@ const Index = () => {
                 <div className="min-h-[48px]">
                 </div>
             </div>
+            <DeleteModal />
         </div>
     )
 }
