@@ -21,8 +21,6 @@ const Edit = () => {
         _method: 'put',
     })
 
-    console.log(user)
-
     const handleAvatarChange = (e) => {
         const file = e.target.files[0]
         setData('avatar', file)
