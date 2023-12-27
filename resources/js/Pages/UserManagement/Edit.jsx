@@ -7,6 +7,7 @@ import Layout from '@/Shared/Layout'
 import { useForm, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
 import UpdatePassword from './Components/UpdatePassword'
+import InfoBanner from '@/Components/Utils/InfoBanner'
 
 const Edit = () => {
     const { user } = usePage().props
@@ -19,6 +20,8 @@ const Edit = () => {
         status: user.status,
         _method: 'put',
     })
+
+    console.log(user)
 
     const handleAvatarChange = (e) => {
         const file = e.target.files[0]
@@ -132,6 +135,10 @@ const Edit = () => {
                         </form>
                     </div>
                     <div className="w-full p-8 rounded-2xl shadow dark:bg-[#111927]">
+                        {(user.default_password == true) && <InfoBanner
+                            text="Please update your password since the one you now use is the default."
+                            canHide={false}
+                        />}
                         <UpdatePassword id={user.id} />
                     </div>
                 </div>
