@@ -101,7 +101,16 @@ class UserManagementController extends Controller
 
     public function destroy(string $id)
     {
-        dd($id);
+        $user   = User::find($id);
+        $avatar = $user->avatar;
+
+        $user->delete();
+
+        if (!empty($avatar)) {
+            $this->delete_file($avatar, 'avatars');
+        }
+
+        return redirect()->back()->with('success', 'User deleted successfully');
     }
 
     public function UpdatePassword(Request $request, string $id)

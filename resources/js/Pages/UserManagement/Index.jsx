@@ -8,16 +8,24 @@ import Thead from '@/Components/Table/Thead'
 import Tr from '@/Components/Table/Tr'
 import Layout from '@/Shared/Layout'
 import { Link, usePage } from '@inertiajs/react'
-import React from 'react'
+import React, { useState } from 'react'
 import UserAvatar from './Components/UserAvatar'
 import MoreActions from '@/Components/Table/MoreActions'
 import TrashMicroSolid from '@/Components/Icons/TrashMicroSolid'
 import MoreActionsLink from '@/Components/Table/MoreActionsLink'
 import PencilSquareMicroSolid from '@/Components/Icons/PencilSquareMicroSolid'
 import DeleteModal from './Components/DeleteModal'
+import MoreActionsButton from '@/Components/Table/MoreActionsButton'
 
 const Index = () => {
     const { users } = usePage().props
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [userToDelete, setUserToDelete] = useState({})
+
+    const deleteUser = (user) => {
+        setUserToDelete({ id: user.id, name: user.name })
+        setShowDeleteModal(true)
+    }
 
     return (
         <div className="max-w-7xl mx-auto mt-8 dark:text-[#edf2e7]">
@@ -77,10 +85,11 @@ const Index = () => {
                                                 href={route('users.edit', user.id)}
                                                 icon={<PencilSquareMicroSolid />}
                                             />
-                                            <MoreActionsLink
+                                            <MoreActionsButton
                                                 label="Delete"
                                                 icon={<TrashMicroSolid />}
                                                 className="text-[#ff5630]"
+                                                onClick={() => deleteUser(user)}
                                             />
                                         </div>
                                     </MoreActions>
@@ -91,7 +100,13 @@ const Index = () => {
                 <div className="min-h-[48px]">
                 </div>
             </div>
-            <DeleteModal />
+            {showDeleteModal &&
+                <DeleteModal
+                    setShowDeleteModal={setShowDeleteModal}
+                    userToDelete={userToDelete}
+                    setUserToDelete={setUserToDelete}
+                />
+            }
         </div>
     )
 }
