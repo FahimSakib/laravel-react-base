@@ -101,7 +101,7 @@ class UserManagementController extends Controller
 
     public function destroy(string $id)
     {
-        //
+        dd($id);
     }
 
     public function UpdatePassword(Request $request, string $id)
