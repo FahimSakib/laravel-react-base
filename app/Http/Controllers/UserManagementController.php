@@ -17,7 +17,7 @@ class UserManagementController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        $users = User::simplePaginate(10);
 
         return Inertia::render('UserManagement/Index', compact('users'));
     }

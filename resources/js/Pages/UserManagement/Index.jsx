@@ -16,6 +16,7 @@ import MoreActionsLink from '@/Components/Table/MoreActionsLink'
 import PencilSquareMicroSolid from '@/Components/Icons/PencilSquareMicroSolid'
 import DeleteModal from './Components/DeleteModal'
 import MoreActionsButton from '@/Components/Table/MoreActionsButton'
+import SimplePaginate from '@/Components/Paginate/SimplePaginate'
 
 const Index = () => {
     const { users } = usePage().props
@@ -59,7 +60,7 @@ const Index = () => {
                         </Th>
                     </Thead>
                     <Tbody>
-                        {users.map(user => (
+                        {users.data.map(user => (
                             <Tr key={user.id}>
                                 <Td type='checkbox'>
                                     <TableCheckbox />
@@ -97,7 +98,11 @@ const Index = () => {
                             </Tr>))}
                     </Tbody>
                 </Table>
-                <div className="min-h-[48px]">
+                <div className="flex items-center justify-end min-h-[48px] px-6">
+                    <SimplePaginate
+                        prevPageUrl={users.prev_page_url}
+                        nextPageUrl={users.next_page_url}
+                    />
                 </div>
             </div>
             {showDeleteModal &&
