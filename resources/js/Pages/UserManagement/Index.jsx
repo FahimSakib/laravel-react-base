@@ -17,15 +17,21 @@ import PencilSquareMicroSolid from '@/Components/Icons/PencilSquareMicroSolid'
 import DeleteModal from './Components/DeleteModal'
 import MoreActionsButton from '@/Components/Table/MoreActionsButton'
 import SimplePaginate from '@/Components/Paginate/SimplePaginate'
+import useMultiSelect from '@/Hooks/useMultiSelect'
 
 const Index = () => {
     const { users } = usePage().props
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [userToDelete, setUserToDelete] = useState({})
+    const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect();
 
     const deleteUser = (user) => {
         setUserToDelete({ id: user.id, name: user.name })
         setShowDeleteModal(true)
+    }
+
+    const handleSelectAll = (e) => {
+        selectAllCheckbox(e, users.data.map(user => user.id))
     }
 
     return (
@@ -39,12 +45,21 @@ const Index = () => {
                 </Link>
             </div>
             <div className="mt-8 rounded-2xl shadow dark:bg-[#111927]">
-                <div className="min-h-[48px]">
+                <div className="flex items-center min-h-[48px] pl-3">
+                    {(selectedItems.ids.length > 0) &&
+                        <button className="flex px-1 py-1.5 gap-1 text-sm text-[#ff5630] rounded-md hover:bg-[#111927]/5 dark:hover:bg-[#edf2f7]/5">
+                            <TrashMicroSolid />
+                            Delete Selected ({selectedItems.ids.length})
+                        </button>
+                    }
                 </div>
                 <Table>
                     <Thead>
                         <Th type='checkbox'>
-                            <TableCheckbox />
+                            <TableCheckbox
+                                onChange={handleSelectAll}
+                                checked={isAllChecked(users.data.length)}
+                            />
                         </Th>
                         <Th>
                             Name
@@ -63,7 +78,10 @@ const Index = () => {
                         {users.data.map(user => (
                             <Tr key={user.id}>
                                 <Td type='checkbox'>
-                                    <TableCheckbox />
+                                    <TableCheckbox
+                                        onChange={(e) => selectSingleCheckbox(e, user.id)}
+                                        checked={selectedItems.ids.includes(user.id)}
+                                    />
                                 </Td>
                                 <Td className='flex gap-2 items-center'>
                                     <UserAvatar user={user} />
