@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('update-dark-mode', [ProfileController::class, 'updateDarkMode'])->name('update.dark.mode');
     Route::resource('users', UserManagementController::class);
     Route::patch('users/{user}/update-password', [UserManagementController::class, 'UpdatePassword'])->name('users.update.password');
+    Route::post('users/bulk-delete', [UserManagementController::class, 'bulkDelete'])->name('users.bulk.delete');
 
     Route::get('product', function () {
         $data = 'product index';

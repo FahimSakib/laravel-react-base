@@ -130,4 +130,21 @@ class UserManagementController extends Controller
 
         return redirect()->back()->with('success', 'Password updated successfully');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $users = User::whereIn('id', $request['ids'])->get();
+
+        foreach ($users as $user) {
+            $avatar = $user->avatar;
+
+            $user->delete();
+
+            if (!empty($avatar)) {
+                $this->delete_file($avatar, 'avatars');
+            }
+        }
+
+        return redirect()->back()->with('success', (count($request['ids']) > 1 ? 'Users' : 'User') . ' deleted successfully');
+    }
 }

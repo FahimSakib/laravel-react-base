@@ -18,11 +18,13 @@ import DeleteModal from './Components/DeleteModal'
 import MoreActionsButton from '@/Components/Table/MoreActionsButton'
 import SimplePaginate from '@/Components/Paginate/SimplePaginate'
 import useMultiSelect from '@/Hooks/useMultiSelect'
+import BulkDeleteModal from './Components/BulkDeleteModal'
 
 const Index = () => {
     const { users } = usePage().props
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [userToDelete, setUserToDelete] = useState({})
+    const [showBulkDeleteModal, setShowBulkDeleteModal] = useState(false)
     const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect();
 
     const deleteUser = (user) => {
@@ -47,7 +49,10 @@ const Index = () => {
             <div className="mt-8 rounded-2xl shadow dark:bg-[#111927]">
                 <div className="flex items-center min-h-[48px] pl-3">
                     {(selectedItems.ids.length > 0) &&
-                        <button className="flex px-1 py-1.5 gap-1 text-sm text-[#ff5630] rounded-md hover:bg-[#111927]/5 dark:hover:bg-[#edf2f7]/5">
+                        <button
+                            className="flex px-1 py-1.5 gap-1 text-sm text-[#ff5630] rounded-md hover:bg-[#111927]/5 dark:hover:bg-[#edf2f7]/5"
+                            onClick={() => setShowBulkDeleteModal(true)}
+                        >
                             <TrashMicroSolid />
                             Delete Selected ({selectedItems.ids.length})
                         </button>
@@ -128,6 +133,13 @@ const Index = () => {
                     setShowDeleteModal={setShowDeleteModal}
                     userToDelete={userToDelete}
                     setUserToDelete={setUserToDelete}
+                />
+            }
+            {showBulkDeleteModal &&
+                <BulkDeleteModal
+                    setShowBulkDeleteModal={setShowBulkDeleteModal}
+                    selectedItems={selectedItems}
+                    setSelectedItems={setSelectedItems}
                 />
             }
         </div>
