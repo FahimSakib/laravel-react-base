@@ -14,6 +14,7 @@ const Create = () => {
         email: '',
         phone: '',
         password: '',
+        password_confirmation: '',
         avatar: '',
         status: 'active'
     })
@@ -121,6 +122,17 @@ const Create = () => {
                                 onChange={(e) => setData('password', e.target.value)}
                             />
                             <InputError message={errors.password} className="mt-2 ml-2" />
+                        </div>
+                        <div>
+                            <TextInput
+                                label="Confirm Password"
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                type="password"
+                                value={data.password_confirmation}
+                                onChange={(e) => setData('password_confirmation', e.target.value)}
+                            />
+                            <InputError message={errors.password_confirmation} className="mt-2 ml-2" />
                         </div>
                         <div className="flex justify-end">
                             <button
