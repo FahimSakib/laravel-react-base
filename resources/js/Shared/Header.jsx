@@ -1,6 +1,7 @@
 import Bars3CenterLeft from '@/Components/Icons/Bars3CenterLeft'
 import React, { useState } from 'react'
 import UserDropdown from './Components/UserDropdown'
+import UserAvatar from './Components/UserAvatar'
 
 const Header = ({ sideNavShow, setSideNavShow, setMobileSideNavShow }) => {
     const [showUserDropdown, setShowUserDropdown] = useState(false)
@@ -21,11 +22,7 @@ const Header = ({ sideNavShow, setSideNavShow, setMobileSideNavShow }) => {
             </div>
             <div className="hidden md:flex relative user-dropdown-container">
                 <button onClick={() => setShowUserDropdown(prev => !prev)} >
-                    <img
-                        src="/assets/images/avatar.jpg"
-                        alt="user name - avatar"
-                        className="w-10 h-10 rounded-full p-[2px] ring-1 dark:ring-2"
-                    />
+                    <UserAvatar />
                 </button>
                 {showUserDropdown && <UserDropdown setShowUserDropdown={setShowUserDropdown} />}
             </div>

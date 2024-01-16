@@ -50,7 +50,7 @@ export default function UserDropdown({ setShowUserDropdown }) {
             </div>
             <div className="px-2 py-4">
                 <button
-                    onClick={() => visitLink(route('home'))}
+                    onClick={() => visitLink(route('users.edit', auth.user.id))}
                     className="flex w-full p-2 gap-3 rounded-md items-center hover:bg-gray-200/75 dark:hover:bg-white/5"
                 >
                     <span className="text-[#6c737f] dark:text-[#9da4ae]">
