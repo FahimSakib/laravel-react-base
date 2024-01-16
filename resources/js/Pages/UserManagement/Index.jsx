@@ -19,6 +19,7 @@ import MoreActionsButton from '@/Components/Table/MoreActionsButton'
 import SimplePaginate from '@/Components/Paginate/SimplePaginate'
 import useMultiSelect from '@/Hooks/useMultiSelect'
 import BulkDeleteModal from './Components/BulkDeleteModal'
+import Status from './Components/Status'
 
 const Index = () => {
     const { users } = usePage().props
@@ -99,7 +100,7 @@ const Index = () => {
                                     {user.phone}
                                 </Td>
                                 <Td>
-                                    {user.status}
+                                    <Status status={user.status} />
                                 </Td>
                                 <Td>
                                     <MoreActions id={user.id}>
