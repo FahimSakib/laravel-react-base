@@ -23,7 +23,7 @@ export default function CreateModal({ setShowCreateModal }) {
                 <form className="space-y-5">
                     <div>
                         <div className="flex items-center gap-1 mb-2">
-                            <span className="block text-sm font-medium">Module Name</span>
+                            <label htmlFor="module_name" className="block text-sm font-medium">Module Name</label>
                             <div className="flex-grow">
                                 <Tooltip
                                     label={<InformationCircleMicroSolid />}
@@ -32,6 +32,7 @@ export default function CreateModal({ setShowCreateModal }) {
                             </div>
                         </div>
                         <TextInputDefault
+                            id="module_name"
                         />
                     </div>
                     <div className="flex items-center gap-3">
