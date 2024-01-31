@@ -30,7 +30,7 @@ export default function BulkDeleteModal({ setShowBulkDeleteModal, selectedItems,
 
     return (
         <BasicModal>
-            <div className="s">
+            <div className="">
                 <p className="my-4 text-center text-lg font-normal text-[#111927] dark:text-[#edf2e7]">
                     Are you sure want to delete?
                 </p>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Foundation\Application;
@@ -27,14 +28,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserManagementController::class);
     Route::patch('users/{user}/update-password', [UserManagementController::class, 'UpdatePassword'])->name('users.update.password');
     Route::post('users/bulk-delete', [UserManagementController::class, 'bulkDelete'])->name('users.bulk.delete');
-
-    Route::get('product', function () {
-        $data = 'product index';
-        return Inertia::render('Home/Index', compact('data'));
-    })->name('product.index');
-
-    Route::get('product/create', function () {
-        $data = 'product create';
-        return Inertia::render('Home/Index', compact('data'));
-    })->name('product.create');
+    Route::resource('permissions', PermissionController::class)->except(['create', 'show']);
 });
