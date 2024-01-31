@@ -133,6 +133,7 @@ const Index = () => {
             </div>
             {showCreateModal &&
                 <CreateModal
+                    setShowCreateModal={setShowCreateModal}
                 />
             }
         </div>
