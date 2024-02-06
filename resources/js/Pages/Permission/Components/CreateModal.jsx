@@ -1,11 +1,37 @@
 import TextInputDefault from "@/Components/Form/TextInputDefault";
 import InformationCircleMicroSolid from "@/Components/Icons/InformationCircleMicroSolid";
+import MinusSolidMini from "@/Components/Icons/MinusSolidMini";
 import PlusSolid from "@/Components/Icons/PlusSolid";
 import XMarkMiniSolid from "@/Components/Icons/XMarkMiniSolid";
 import BasicModal from "@/Components/Modals/BasicModal";
 import Tooltip from "@/Components/Modals/Tooltip";
+import { useState } from "react";
 
 export default function CreateModal({ setShowCreateModal }) {
+    const uid = function () {
+        return Date.now().toString(36) + Math.random().toString(36).slice(2);
+    }
+
+    const [fields, setFields] = useState([{ id: uid() }])
+    const [permissionNamesSlugs, setPermissionNamesSlugs] = useState({})
+
+    const permissionNameChange = (e, fieldId) => {
+        const slugKey = `permission_slug_${fieldId}`
+        const slug = e.target.value.replace(/\s/g, "-")
+        setPermissionNamesSlugs(prev => ({ ...prev, [fieldId]: { [e.target.name]: e.target.value, [slugKey]: slug } }))
+    }
+
+    const addField = () => {
+        setFields([...fields, { id: uid() }])
+    }
+
+    const deleteFiled = (fieldId) => {
+        const updatedfields = permissionNamesSlugs
+        delete updatedfields[fieldId]
+        setPermissionNamesSlugs(updatedfields)
+        setFields(fields.filter(field => field.id !== fieldId))
+    }
+
     return (
         <BasicModal className="max-w-2xl w-full">
             <div className="flex items-center justify-between text-[#6c737f] dark:text-[#a0aec0]">
@@ -35,25 +61,40 @@ export default function CreateModal({ setShowCreateModal }) {
                             id="module_name"
                         />
                     </div>
-                    <div className="flex items-center gap-3">
-                        <div className="w-1/2">
-                            <TextInputDefault
-                                label="Permission Name"
-                            />
-                        </div>
-                        <div className="w-1/2">
-                            <TextInputDefault
-                                label="Permission slug"
-                            />
-                        </div>
-                        <div className="pt-8">
-                            <button
-                                className="rounded-full hover:bg-[#111927]/10 dark:hover:bg-[#edf2f7]/10"
-                            >
-                                <PlusSolid />
-                            </button>
-                        </div>
-                    </div>
+                    {fields.map((field, index) => (
+                        <div className="flex items-center gap-3" key={field.id}>
+                            <div className="w-1/2">
+                                <TextInputDefault
+                                    label="Permission Name"
+                                    id={`permission_name_${field.id}`}
+                                    name={`permission_name_${field.id}`}
+                                    onChange={(e) => permissionNameChange(e, field.id)}
+                                    value={permissionNamesSlugs[field.id]?.[`permission_name_${field.id}`] ?? ''}
+                                />
+                            </div>
+                            <div className="w-1/2">
+                                <TextInputDefault
+                                    label="Permission slug"
+                                    value={permissionNamesSlugs[field.id]?.[`permission_slug_${field.id}`] ?? ''}
+                                    readOnly
+                                />
+                            </div>
+                            <div className="pt-8">
+                                {(fields.length > 1 && index !== 0) ? (<button
+                                    className="rounded-full hover:bg-[#111927]/10 dark:hover:bg-[#edf2f7]/10"
+                                    type="button"
+                                    onClick={() => deleteFiled(field.id)}
+                                >
+                                    <MinusSolidMini />
+                                </button>) : (<button
+                                    className="rounded-full hover:bg-[#111927]/10 dark:hover:bg-[#edf2f7]/10"
+                                    type="button"
+                                    onClick={addField}
+                                >
+                                    <PlusSolid />
+                                </button>)}
+                            </div>
+                        </div>))}
                 </form>
             </div>
         </BasicModal>
