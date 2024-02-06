@@ -95,6 +95,25 @@ export default function CreateModal({ setShowCreateModal }) {
                                 </button>)}
                             </div>
                         </div>))}
+                    <div className="flex gap-2 justify-end">
+                        <button
+                            className="px-5 py-2 border dark:border-[#2F3746] text-[#111927] dark:text-[#edf2e7] font-semibold rounded-xl hover:bg-[#111927]/5 dark:hover:bg-[#edf2f7]/5"
+                            type="button"
+                            onClick={() => setShowCreateModal(false)}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            className="flex items-center px-5 py-2 rounded-xl text-white font-semibold bg-[#6366f1] enabled:hover:bg-[#4338ca] disabled:opacity-75 disabled:cursor-not-allowed"
+                            type="submit"
+                        // disabled={confirmValue !== `delete ${selectedItems.ids.length} ${userOrUsers}`}
+                        // onClick={deleteUsers}
+                        // disabled
+                        >
+                            {/* {loading && <Spiner width="4" height="4" className="mr-2" />} */}
+                            Create
+                        </button>
+                    </div>
                 </form>
             </div>
         </BasicModal>
