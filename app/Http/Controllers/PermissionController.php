@@ -67,7 +67,17 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'module_name'     => 'required',
+            'permission_name' => 'required',
+            'permission_slug' => 'required'
+        ]);
+
+        $request->merge(['module_name' => strtolower($request->module_name)]);
+
+        Permission::find($id)->update($request->all());
+
+        return redirect()->back()->with('success', 'Permission updated successfully');
     }
 
     /**

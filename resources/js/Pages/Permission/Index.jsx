@@ -18,11 +18,14 @@ import MoreActionsButton from '@/Components/Table/MoreActionsButton'
 import SimplePaginate from '@/Components/Paginate/SimplePaginate'
 import useMultiSelect from '@/Hooks/useMultiSelect'
 import CreateModal from './Components/CreateModal'
+import EditModal from './Components/EditModal'
 // import BulkDeleteModal from './Components/BulkDeleteModal'
 
 const Index = () => {
     const { permissions } = usePage().props
     const [showCreateModal, setShowCreateModal] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [permissionToEdit, setPermissionToEdit] = useState({})
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [userToDelete, setUserToDelete] = useState({})
     const [showBulkDeleteModal, setShowBulkDeleteModal] = useState(false)
@@ -32,8 +35,6 @@ const Index = () => {
     //     setUserToDelete({ id: user.id, name: user.name })
     //     setShowDeleteModal(true)
     // }
-
-    console.log(permissions)
 
     const handleSelectAll = (e) => {
         selectAllCheckbox(e, permissions.data.map(user => user.id))
@@ -103,10 +104,10 @@ const Index = () => {
                                 <Td>
                                     <MoreActions id={permission.id}>
                                         <div>
-                                            <MoreActionsLink
+                                            <MoreActionsButton
                                                 label="Edit"
-                                                href={route('permissions.edit', permission.id)}
                                                 icon={<PencilSquareMicroSolid />}
+                                                onClick={() => { setPermissionToEdit(permission); setShowEditModal(true) }}
                                             />
                                             <MoreActionsButton
                                                 label="Delete"
@@ -130,6 +131,13 @@ const Index = () => {
             {showCreateModal &&
                 <CreateModal
                     setShowCreateModal={setShowCreateModal}
+                />
+            }
+            {showEditModal &&
+                <EditModal
+                    permissionToEdit={permissionToEdit}
+                    setPermissionToEdit={setPermissionToEdit}
+                    setShowEditModal={setShowEditModal}
                 />
             }
         </div>
