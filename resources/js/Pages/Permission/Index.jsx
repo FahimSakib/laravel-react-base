@@ -13,12 +13,12 @@ import MoreActions from '@/Components/Table/MoreActions'
 import TrashMicroSolid from '@/Components/Icons/TrashMicroSolid'
 import MoreActionsLink from '@/Components/Table/MoreActionsLink'
 import PencilSquareMicroSolid from '@/Components/Icons/PencilSquareMicroSolid'
-// import DeleteModal from './Components/DeleteModal'
 import MoreActionsButton from '@/Components/Table/MoreActionsButton'
 import SimplePaginate from '@/Components/Paginate/SimplePaginate'
 import useMultiSelect from '@/Hooks/useMultiSelect'
 import CreateModal from './Components/CreateModal'
 import EditModal from './Components/EditModal'
+import DeleteModal from './Components/DeleteModal'
 // import BulkDeleteModal from './Components/BulkDeleteModal'
 
 const Index = () => {
@@ -27,14 +27,9 @@ const Index = () => {
     const [showEditModal, setShowEditModal] = useState(false)
     const [permissionToEdit, setPermissionToEdit] = useState({})
     const [showDeleteModal, setShowDeleteModal] = useState(false)
-    const [userToDelete, setUserToDelete] = useState({})
+    const [permissionToDelete, setPermissionToDelete] = useState('')
     const [showBulkDeleteModal, setShowBulkDeleteModal] = useState(false)
     const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect();
-
-    // const deleteUser = (user) => {
-    //     setUserToDelete({ id: user.id, name: user.name })
-    //     setShowDeleteModal(true)
-    // }
 
     const handleSelectAll = (e) => {
         selectAllCheckbox(e, permissions.data.map(user => user.id))
@@ -113,7 +108,7 @@ const Index = () => {
                                                 label="Delete"
                                                 icon={<TrashMicroSolid />}
                                                 className="text-[#ff5630]"
-                                                onClick={() => deleteUser(permission)}
+                                                onClick={() => { setPermissionToDelete(permission.id); setShowDeleteModal(true) }}
                                             />
                                         </div>
                                     </MoreActions>
@@ -138,6 +133,13 @@ const Index = () => {
                     permissionToEdit={permissionToEdit}
                     setPermissionToEdit={setPermissionToEdit}
                     setShowEditModal={setShowEditModal}
+                />
+            }
+            {showDeleteModal &&
+                <DeleteModal
+                    setShowDeleteModal={setShowDeleteModal}
+                    permissionToDelete={permissionToDelete}
+                    setPermissionToDelete={setPermissionToDelete}
                 />
             }
         </div>
