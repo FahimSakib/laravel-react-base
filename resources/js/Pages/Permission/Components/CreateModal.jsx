@@ -15,7 +15,7 @@ export default function CreateModal({ setShowCreateModal }) {
         return Date.now().toString(36) + Math.random().toString(36).slice(2);
     }
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, reset } = useForm({
         module_name: '',
     })
 
