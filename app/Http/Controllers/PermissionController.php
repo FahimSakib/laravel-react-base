@@ -14,7 +14,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Permission/Index');
+        $permissions = Permission::simplePaginate(10);
+
+        return Inertia::render('Permission/Index', compact('permissions'));
     }
 
     /**

@@ -9,7 +9,6 @@ import Tr from '@/Components/Table/Tr'
 import Layout from '@/Shared/Layout'
 import { Link, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
-// import UserAvatar from './Components/UserAvatar'
 import MoreActions from '@/Components/Table/MoreActions'
 import TrashMicroSolid from '@/Components/Icons/TrashMicroSolid'
 import MoreActionsLink from '@/Components/Table/MoreActionsLink'
@@ -20,10 +19,9 @@ import SimplePaginate from '@/Components/Paginate/SimplePaginate'
 import useMultiSelect from '@/Hooks/useMultiSelect'
 import CreateModal from './Components/CreateModal'
 // import BulkDeleteModal from './Components/BulkDeleteModal'
-// import Status from './Components/Status'
 
 const Index = () => {
-    const { users } = usePage().props
+    const { permissions } = usePage().props
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [userToDelete, setUserToDelete] = useState({})
@@ -35,8 +33,10 @@ const Index = () => {
     //     setShowDeleteModal(true)
     // }
 
+    console.log(permissions)
+
     const handleSelectAll = (e) => {
-        selectAllCheckbox(e, users.data.map(user => user.id))
+        selectAllCheckbox(e, permissions.data.map(user => user.id))
     }
 
     return (
@@ -64,71 +64,67 @@ const Index = () => {
                 <Table>
                     <Thead>
                         <Th type='checkbox'>
-                            {/* <TableCheckbox
+                            <TableCheckbox
                                 onChange={handleSelectAll}
-                                checked={isAllChecked(users.data.length)}
-                            /> */}
+                                checked={isAllChecked(permissions.data.length)}
+                            />
                         </Th>
                         <Th>
-                            Name
+                            Module Name
                         </Th>
                         <Th>
-                            Phone
+                            Permission Name
                         </Th>
                         <Th>
-                            Status
+                            Permission Slug
                         </Th>
                         <Th className="text-right">
                             Actions
                         </Th>
                     </Thead>
                     <Tbody>
-                        {/* {users.data.map(user => (
-                            <Tr key={user.id}>
+                        {permissions.data.map(permission => (
+                            <Tr key={permission.id}>
                                 <Td type='checkbox'>
                                     <TableCheckbox
-                                        onChange={(e) => selectSingleCheckbox(e, user.id)}
-                                        checked={selectedItems.ids.includes(user.id)}
+                                        onChange={(e) => selectSingleCheckbox(e, permission.id)}
+                                        checked={selectedItems.ids.includes(permission.id)}
                                     />
                                 </Td>
-                                <Td className='flex gap-2 items-center'>
-                                    <UserAvatar user={user} />
-                                    <div>
-                                        <p className="font-semibold">{user.name}</p>
-                                        <p className="text-[#6c737f] dark:text-[#a0aec0]">{user.email}</p>
-                                    </div>
+                                <Td className="capitalize">
+                                    {permission.module_name}
                                 </Td>
                                 <Td>
-                                    {user.phone}
+                                    {permission.permission_name}
                                 </Td>
                                 <Td>
-                                    <Status status={user.status} />
+                                    {permission.permission_slug}
                                 </Td>
                                 <Td>
-                                    <MoreActions id={user.id}>
+                                    <MoreActions id={permission.id}>
                                         <div>
                                             <MoreActionsLink
                                                 label="Edit"
-                                                href={route('users.edit', user.id)}
+                                                href={route('permissions.edit', permission.id)}
                                                 icon={<PencilSquareMicroSolid />}
                                             />
                                             <MoreActionsButton
                                                 label="Delete"
                                                 icon={<TrashMicroSolid />}
                                                 className="text-[#ff5630]"
-                                                onClick={() => deleteUser(user)}
+                                                onClick={() => deleteUser(permission)}
                                             />
                                         </div>
                                     </MoreActions>
                                 </Td>
-                            </Tr>))} */}
+                            </Tr>))}
                     </Tbody>
                 </Table>
                 <div className="flex items-center justify-end min-h-[48px] px-6">
-                    {/* <SimplePaginate
-                        prevPageUrl={users.prev_page_url}
-                        nextPageUrl={users.next_page_url}
-                    /> */}
+                    <SimplePaginate
+                        prevPageUrl={permissions.prev_page_url}
+                        nextPageUrl={permissions.next_page_url}
+                    />
                 </div>
             </div>
             {showCreateModal &&
