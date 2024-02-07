@@ -5,6 +5,9 @@ import PlusSolid from "@/Components/Icons/PlusSolid";
 import XMarkMiniSolid from "@/Components/Icons/XMarkMiniSolid";
 import BasicModal from "@/Components/Modals/BasicModal";
 import Tooltip from "@/Components/Modals/Tooltip";
+import Spiner from "@/Components/Utils/Spiner";
+import { router } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function CreateModal({ setShowCreateModal }) {
@@ -12,12 +15,17 @@ export default function CreateModal({ setShowCreateModal }) {
         return Date.now().toString(36) + Math.random().toString(36).slice(2);
     }
 
+    const { data, setData, post, processing, errors, reset } = useForm({
+        module_name: '',
+    })
+
     const [fields, setFields] = useState([{ id: uid() }])
     const [permissionNamesSlugs, setPermissionNamesSlugs] = useState({})
+    const [loading, setLoading] = useState(false)
 
     const permissionNameChange = (e, fieldId) => {
         const slugKey = `permission_slug_${fieldId}`
-        const slug = e.target.value.replace(/\s/g, "-")
+        const slug = e.target.value.replace(/\s/g, "-").toLowerCase()
         setPermissionNamesSlugs(prev => ({ ...prev, [fieldId]: { [e.target.name]: e.target.value, [slugKey]: slug } }))
     }
 
@@ -30,6 +38,25 @@ export default function CreateModal({ setShowCreateModal }) {
         delete updatedfields[fieldId]
         setPermissionNamesSlugs(updatedfields)
         setFields(fields.filter(field => field.id !== fieldId))
+    }
+
+    const submit = (e) => {
+        e.preventDefault()
+
+        router.post(route('permissions.store'), { module_name: data.module_name, permissionNamesSlugs }, {
+            preserveScroll: true,
+            onStart: () => {
+                setLoading(true)
+            },
+            onSuccess: () => {
+                setLoading(false)
+                reset()
+                setShowCreateModal(false)
+            },
+            onFinish: () => {
+                setLoading(false)
+            }
+        })
     }
 
     return (
@@ -46,7 +73,7 @@ export default function CreateModal({ setShowCreateModal }) {
                 </button>
             </div>
             <div className="mt-5 px-3">
-                <form className="space-y-5">
+                <form className="space-y-5" onSubmit={submit}>
                     <div>
                         <div className="flex items-center gap-1 mb-2">
                             <label htmlFor="module_name" className="block text-sm font-medium">Module Name</label>
@@ -59,6 +86,9 @@ export default function CreateModal({ setShowCreateModal }) {
                         </div>
                         <TextInputDefault
                             id="module_name"
+                            value={data.module_name}
+                            onChange={(e) => setData('module_name', e.target.value)}
+                            required
                         />
                     </div>
                     {fields.map((field, index) => (
@@ -70,6 +100,7 @@ export default function CreateModal({ setShowCreateModal }) {
                                     name={`permission_name_${field.id}`}
                                     onChange={(e) => permissionNameChange(e, field.id)}
                                     value={permissionNamesSlugs[field.id]?.[`permission_name_${field.id}`] ?? ''}
+                                    required
                                 />
                             </div>
                             <div className="w-1/2">
@@ -77,6 +108,8 @@ export default function CreateModal({ setShowCreateModal }) {
                                     label="Permission slug"
                                     value={permissionNamesSlugs[field.id]?.[`permission_slug_${field.id}`] ?? ''}
                                     readOnly
+                                    disabled
+                                    className="disabled:cursor-not-allowed"
                                 />
                             </div>
                             <div className="pt-8">
@@ -106,11 +139,9 @@ export default function CreateModal({ setShowCreateModal }) {
                         <button
                             className="flex items-center px-5 py-2 rounded-xl text-white font-semibold bg-[#6366f1] enabled:hover:bg-[#4338ca] disabled:opacity-75 disabled:cursor-not-allowed"
                             type="submit"
-                        // disabled={confirmValue !== `delete ${selectedItems.ids.length} ${userOrUsers}`}
-                        // onClick={deleteUsers}
-                        // disabled
+                            disabled={loading}
                         >
-                            {/* {loading && <Spiner width="4" height="4" className="mr-2" />} */}
+                            {loading && <Spiner width="4" height="4" className="mr-2" />}
                             Create
                         </button>
                     </div>

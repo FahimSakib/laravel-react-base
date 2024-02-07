@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,7 +30,18 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        foreach ($request['permissionNamesSlugs'] as $key => $permission) {
+            $data[] = [
+                'module_name'     => strtolower($request->module_name),
+                'permission_name' => $permission['permission_name_' . $key],
+                'permission_slug' => $permission['permission_slug_' . $key],
+                'created_at'      => Carbon::now()
+            ];
+        }
+
+        Permission::insert($data);
+
+        return redirect()->back()->with('success', (count($data) > 1 ? 'Permissions' : 'Permission') . ' created successfully');
     }
 
     /**
