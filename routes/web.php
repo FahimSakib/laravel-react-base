@@ -29,4 +29,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('users/{user}/update-password', [UserManagementController::class, 'UpdatePassword'])->name('users.update.password');
     Route::post('users/bulk-delete', [UserManagementController::class, 'bulkDelete'])->name('users.bulk.delete');
     Route::resource('permissions', PermissionController::class)->except(['create', 'show']);
+    Route::post('permissions/bulk-delete', [PermissionController::class, 'bulkDelete'])->name('permissions.bulk.delete');
 });

@@ -89,4 +89,11 @@ class PermissionController extends Controller
 
         return redirect()->back()->with('success', 'Permission deleted successfully');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        Permission::whereIn('id', $request['ids'])->delete();
+
+        return redirect()->back()->with('success', (count($request['ids']) > 1 ? 'Permissions' : 'Permission') . ' deleted successfully');
+    }
 }

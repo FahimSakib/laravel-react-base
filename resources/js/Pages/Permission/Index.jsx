@@ -19,7 +19,6 @@ import useMultiSelect from '@/Hooks/useMultiSelect'
 import CreateModal from './Components/CreateModal'
 import EditModal from './Components/EditModal'
 import DeleteModal from './Components/DeleteModal'
-// import BulkDeleteModal from './Components/BulkDeleteModal'
 
 const Index = () => {
     const { permissions } = usePage().props
@@ -27,8 +26,7 @@ const Index = () => {
     const [showEditModal, setShowEditModal] = useState(false)
     const [permissionToEdit, setPermissionToEdit] = useState({})
     const [showDeleteModal, setShowDeleteModal] = useState(false)
-    const [permissionToDelete, setPermissionToDelete] = useState('')
-    const [showBulkDeleteModal, setShowBulkDeleteModal] = useState(false)
+    const [permissionToDelete, setPermissionToDelete] = useState({})
     const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect();
 
     const handleSelectAll = (e) => {
@@ -50,7 +48,7 @@ const Index = () => {
                     {(selectedItems.ids.length > 0) &&
                         <button
                             className="flex px-1 py-1.5 gap-1 text-sm text-[#ff5630] rounded-md hover:bg-[#111927]/5 dark:hover:bg-[#edf2f7]/5"
-                            onClick={() => setShowBulkDeleteModal(true)}
+                            onClick={() => { setPermissionToDelete({ ids: selectedItems, type: 'bulk' }); setShowDeleteModal(true) }}
                         >
                             <TrashMicroSolid />
                             Delete Selected ({selectedItems.ids.length})
@@ -108,7 +106,7 @@ const Index = () => {
                                                 label="Delete"
                                                 icon={<TrashMicroSolid />}
                                                 className="text-[#ff5630]"
-                                                onClick={() => { setPermissionToDelete(permission.id); setShowDeleteModal(true) }}
+                                                onClick={() => { setPermissionToDelete({ id: permission.id, type: 'single' }); setShowDeleteModal(true) }}
                                             />
                                         </div>
                                     </MoreActions>
@@ -140,6 +138,7 @@ const Index = () => {
                     setShowDeleteModal={setShowDeleteModal}
                     permissionToDelete={permissionToDelete}
                     setPermissionToDelete={setPermissionToDelete}
+                    setSelectedItems={setSelectedItems}
                 />
             }
         </div>
