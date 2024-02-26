@@ -20,7 +20,7 @@ const PermissionsByModule = ({ module, permissions, setSelectedIdsByModules }) =
                     onChange={handleSelectAll}
                     checked={isAllChecked(permissions.length)}
                 />
-                <span className="font-medium">{module}</span>
+                <span className="font-medium capitalize">{module}</span>
             </div>
             <div className="flex flex-wrap gap-3 mt-3 ml-5">
                 {permissions.map((permission, index) => (

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -23,8 +24,6 @@ class RoleController extends Controller
     {
         $permissionsByModule = Permission::all()->groupBy('module_name');
 
-        // dd($permissionsByModule);
-
         return Inertia::render('Role/Create', compact('permissionsByModule'));
     }
 
@@ -33,7 +32,14 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = Role::create([
+            'role_name'  => $request['role_name'],
+            'created_by' => $request->user()->id
+        ]);
+
+        $role->permissions()->sync($request['permission_ids']);
+
+        return redirect()->route('roles.index')->with('success', 'Role created successfully');
     }
 
     /**
