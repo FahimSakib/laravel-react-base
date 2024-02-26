@@ -57,7 +57,12 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $permissionsByModule         = Permission::all()->groupBy('module_name');
+        $role                        = Role::with('permissions:id,module_name')->find($id);
+        $roleName                    = $role->name;
+        $selectedPermissionsByModule = $role->permissions->groupBy('module_name');
+
+        return Inertia::render('Role/Edit', compact('permissionsByModule', 'roleName', 'selectedPermissionsByModule'));
     }
 
     /**

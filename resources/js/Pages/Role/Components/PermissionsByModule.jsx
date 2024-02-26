@@ -2,8 +2,17 @@ import TableCheckbox from "@/Components/Table/TableCheckbox";
 import useMultiSelect from "@/Hooks/useMultiSelect";
 import { memo, useEffect } from "react";
 
-const PermissionsByModule = ({ module, permissions, setSelectedIdsByModules }) => {
+const PermissionsByModule = ({ module, permissions, setSelectedIdsByModules, selectedPermissionsByModule = '', type = '' }) => {
     const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect();
+
+    // console.log(selectedPermissionsByModule, type)
+
+    useEffect(() => {
+        if (type === 'edit' && selectedPermissionsByModule) {
+            const selectedIds = selectedPermissionsByModule.map(selectedPermission => selectedPermission.id)
+            setSelectedItems({ ids: selectedIds })
+        }
+    }, [])
 
     const handleSelectAll = (e) => {
         selectAllCheckbox(e, permissions.map(permission => permission.id))
