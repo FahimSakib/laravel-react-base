@@ -14,7 +14,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::with(['user:id,name', 'permissions:id'])->simplePaginate(10);
+
+        return Inertia::render('Role/Index', compact('roles'));
     }
 
     /**
@@ -33,7 +35,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $role = Role::create([
-            'role_name'  => $request['role_name'],
+            'name'       => $request['name'],
             'created_by' => $request->user()->id
         ]);
 

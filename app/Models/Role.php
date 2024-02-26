@@ -16,11 +16,11 @@ class Role extends Model
      *
      * @var array
      */
-    protected $fillable = ['role_name', 'created_by'];
+    protected $fillable = ['name', 'created_by'];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function permissions(): BelongsToMany

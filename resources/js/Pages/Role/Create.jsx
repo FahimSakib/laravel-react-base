@@ -12,7 +12,7 @@ const Create = () => {
     const [selectedIdsByModule, setSelectedIdsByModules] = useState({})
     const [loading, setLoading] = useState(false)
     const { data, setData, errors, setError, clearErrors, reset } = useForm({
-        role_name: '',
+        name: '',
     })
 
     const submit = (e) => {
@@ -22,19 +22,19 @@ const Create = () => {
 
         clearErrors()
 
-        if (!data.role_name) {
-            setError({ role_name: 'The role name field is required.' })
+        if (!data.name) {
+            setError({ name: 'The role name field is required.' })
         }
 
         if (!permission_ids.length) {
             setError({ permission_ids: 'Please select at least one permission.' })
         }
 
-        if (!data.role_name || !permission_ids.length) {
+        if (!data.name || !permission_ids.length) {
             return
         }
 
-        router.post(route('roles.store'), { role_name: data.role_name, permission_ids }, {
+        router.post(route('roles.store'), { name: data.name, permission_ids }, {
             preserveScroll: true,
             onStart: () => {
                 setLoading(true)
@@ -58,12 +58,12 @@ const Create = () => {
                     <div>
                         <TextInput
                             label="Role Name"
-                            id="role_name"
-                            name="role_name"
-                            value={data.role_name}
-                            onChange={(e) => setData('role_name', e.target.value)}
+                            id="name"
+                            name="name"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
                         />
-                        <InputError message={errors.role_name} className="mt-2 ml-2" />
+                        <InputError message={errors.name} className="mt-2 ml-2" />
                     </div>
                 </form>
                 {Object.keys(permissionsByModule).map((key) => (
