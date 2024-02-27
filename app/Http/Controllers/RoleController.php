@@ -59,10 +59,9 @@ class RoleController extends Controller
     {
         $permissionsByModule         = Permission::all()->groupBy('module_name');
         $role                        = Role::with('permissions:id,module_name')->find($id);
-        $roleName                    = $role->name;
         $selectedPermissionsByModule = $role->permissions->groupBy('module_name');
 
-        return Inertia::render('Role/Edit', compact('permissionsByModule', 'roleName', 'selectedPermissionsByModule'));
+        return Inertia::render('Role/Edit', compact('permissionsByModule', 'role', 'selectedPermissionsByModule'));
     }
 
     /**
@@ -70,7 +69,12 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $role = Role::find($id);
+
+        $role->update(['name' => $request['name']]);
+        $role->permissions()->sync($request['permission_ids']);
+
+        return redirect()->back()->with('success', 'Role updated successfully');
     }
 
     /**

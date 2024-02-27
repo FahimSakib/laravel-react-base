@@ -8,15 +8,12 @@ import PermissionsByModule from './Components/PermissionsByModule'
 import { router } from '@inertiajs/react'
 
 const Edit = () => {
-    const { permissionsByModule, roleName, selectedPermissionsByModule } = usePage().props
+    const { permissionsByModule, role, selectedPermissionsByModule } = usePage().props
     const [selectedIdsByModule, setSelectedIdsByModules] = useState({})
     const [loading, setLoading] = useState(false)
     const { data, setData, errors, setError, clearErrors, reset } = useForm({
-        name: roleName,
+        name: role.name,
     })
-
-    // console.log(selectedPermissionsByModule)
-    console.log(selectedIdsByModule)
 
     const submit = (e) => {
         e.preventDefault()
@@ -37,7 +34,7 @@ const Edit = () => {
             return
         }
 
-        router.post(route('roles.store'), { name: data.name, permission_ids }, {
+        router.patch(route('roles.update', role.id), { name: data.name, permission_ids }, {
             preserveScroll: true,
             onStart: () => {
                 setLoading(true)
@@ -45,7 +42,6 @@ const Edit = () => {
             onSuccess: () => {
                 setLoading(false)
                 clearErrors()
-                reset()
             },
             onFinish: () => {
                 setLoading(false)
@@ -82,7 +78,7 @@ const Edit = () => {
                 <InputError message={errors.permission_ids} className="mt-2 ml-2" />
                 <div className="flex justify-end mt-5">
                     <button
-                        className="flex items-center px-5 py-2 rounded-xl text-white font-semibold bg-[#6366f1] hover:bg-[#4338ca] disabled:opacity-75"
+                        className="flex items-center px-5 py-2 rounded-xl text-white font-semibold bg-[#6366f1] enabled:hover:bg-[#4338ca] disabled:opacity-75 disabled:cursor-not-allowed"
                         onClick={submit}
                         disabled={loading}
                     >
