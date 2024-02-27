@@ -17,7 +17,7 @@ import DeleteModal from './Components/DeleteModal'
 import MoreActionsButton from '@/Components/Table/MoreActionsButton'
 import SimplePaginate from '@/Components/Paginate/SimplePaginate'
 import useMultiSelect from '@/Hooks/useMultiSelect'
-// import BulkDeleteModal from './Components/BulkDeleteModal'
+import BulkDeleteModal from './Components/BulkDeleteModal'
 
 const Index = () => {
     const { roles } = usePage().props

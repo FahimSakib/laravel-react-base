@@ -86,4 +86,11 @@ class RoleController extends Controller
 
         return redirect()->back()->with('success', 'Role deleted successfully');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        Role::whereIn('id', $request['ids'])->delete();
+
+        return redirect()->back()->with('success', (count($request['ids']) > 1 ? 'Roles' : 'Role') . ' deleted successfully');
+    }
 }

@@ -32,4 +32,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('permissions', PermissionController::class)->except(['create', 'show']);
     Route::post('permissions/bulk-delete', [PermissionController::class, 'bulkDelete'])->name('permissions.bulk.delete');
     Route::resource('roles', RoleController::class);
+    Route::post('roles/bulk-delete', [RoleController::class, 'bulkDelete'])->name('roles.bulk.delete');
 });
