@@ -16,12 +16,7 @@ class Role extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'created_by'];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
+    protected $fillable = ['name'];
 
     public function permissions(): BelongsToMany
     {

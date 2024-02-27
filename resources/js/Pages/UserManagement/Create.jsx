@@ -1,4 +1,5 @@
 import InputError from '@/Components/Form/InputError'
+import SelectInputLarge from '@/Components/Form/SelectInputLarge'
 import TextInput from '@/Components/Form/TextInput'
 import ArrowUpTrayMini from '@/Components/Icons/ArrowUpTrayMini'
 import ToggleButton from '@/Components/ToggleButton'
@@ -111,6 +112,13 @@ const Create = () => {
                                 onChange={(e) => setData('phone', e.target.value)}
                             />
                             <InputError message={errors.phone} className="mt-2 ml-2" />
+                        </div>
+                        <div>
+                            <SelectInputLarge
+                                label="Role"
+                                id="role_id"
+                                options={[{ value: 'one', label: 'One' }, { value: 'two', label: 'Two' }]}
+                            />
                         </div>
                         <div>
                             <TextInput

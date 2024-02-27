@@ -71,9 +71,6 @@ const Index = () => {
                         <Th>
                             Permissions
                         </Th>
-                        <Th>
-                            Created By
-                        </Th>
                         <Th className="text-right">
                             Actions
                         </Th>
@@ -94,9 +91,6 @@ const Index = () => {
                                     {role.permissions.length} Permission{role.permissions.length > 1 ? 's' : ''}
                                 </Td>
                                 <Td>
-                                    {role.user.name}
-                                </Td>
-                                <Td>
                                     <MoreActions id={role.id}>
                                         <div>
                                             <MoreActionsLink
@@ -115,7 +109,7 @@ const Index = () => {
                                 </Td>
                             </Tr>)) :
                             <Tr>
-                                <Td className="text-center" colSpan="5">No data found</Td>
+                                <Td className="text-center" colSpan="4">No data found</Td>
                             </Tr>
                         }
                     </Tbody>
