@@ -66,6 +66,11 @@ const Create = () => {
                         <InputError message={errors.name} className="mt-2 ml-2" />
                     </div>
                 </form>
+                {(permissionsByModule.length === 0) &&
+                    <p className="mt-5 text-sm text-[#6c737f] dark:text-[#a0aec0]">
+                        Please create permissions first to create a role
+                    </p>
+                }
                 {Object.keys(permissionsByModule).map((key) => (
                     <PermissionsByModule
                         module={key}
@@ -77,9 +82,9 @@ const Create = () => {
                 <InputError message={errors.permission_ids} className="mt-2 ml-2" />
                 <div className="flex justify-end mt-5">
                     <button
-                        className="flex items-center px-5 py-2 rounded-xl text-white font-semibold bg-[#6366f1] hover:bg-[#4338ca] disabled:opacity-75"
+                        className="flex items-center px-5 py-2 rounded-xl text-white font-semibold bg-[#6366f1] enabled:hover:bg-[#4338ca] disabled:opacity-75 disabled:cursor-not-allowed"
                         onClick={submit}
-                        disabled={loading}
+                        disabled={loading || (permissionsByModule.length === 0)}
                     >
                         {loading && <Spiner width="4" height="4" className="mr-2" />}
                         Create

@@ -79,9 +79,9 @@ const Index = () => {
                         </Th>
                     </Thead>
                     <Tbody>
-                        {roles.data.map(role => (
+                        {roles.data.length ? roles.data.map(role => (
                             <Tr key={role.id}>
-                                <Td type='checkbox'>
+                                <Td type="checkbox">
                                     <TableCheckbox
                                         onChange={(e) => selectSingleCheckbox(e, role.id)}
                                         checked={selectedItems.ids.includes(role.id)}
@@ -113,7 +113,11 @@ const Index = () => {
                                         </div>
                                     </MoreActions>
                                 </Td>
-                            </Tr>))}
+                            </Tr>)) :
+                            <Tr>
+                                <Td className="text-center" colSpan="5">No data found</Td>
+                            </Tr>
+                        }
                     </Tbody>
                 </Table>
                 <div className="flex items-center justify-end min-h-[48px] px-6">
