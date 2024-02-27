@@ -13,7 +13,7 @@ import MoreActions from '@/Components/Table/MoreActions'
 import TrashMicroSolid from '@/Components/Icons/TrashMicroSolid'
 import MoreActionsLink from '@/Components/Table/MoreActionsLink'
 import PencilSquareMicroSolid from '@/Components/Icons/PencilSquareMicroSolid'
-// import DeleteModal from './Components/DeleteModal'
+import DeleteModal from './Components/DeleteModal'
 import MoreActionsButton from '@/Components/Table/MoreActionsButton'
 import SimplePaginate from '@/Components/Paginate/SimplePaginate'
 import useMultiSelect from '@/Hooks/useMultiSelect'
@@ -22,12 +22,12 @@ import useMultiSelect from '@/Hooks/useMultiSelect'
 const Index = () => {
     const { roles } = usePage().props
     const [showDeleteModal, setShowDeleteModal] = useState(false)
-    const [userToDelete, setUserToDelete] = useState({})
+    const [roleToDelete, setRoleToDelete] = useState({})
     const [showBulkDeleteModal, setShowBulkDeleteModal] = useState(false)
     const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect();
 
-    const deleteUser = (user) => {
-        setUserToDelete({ id: user.id, name: user.name })
+    const deleteRole = (role) => {
+        setRoleToDelete({ id: role.id, name: role.name })
         setShowDeleteModal(true)
     }
 
@@ -108,7 +108,7 @@ const Index = () => {
                                                 label="Delete"
                                                 icon={<TrashMicroSolid />}
                                                 className="text-[#ff5630]"
-                                                onClick={() => deleteUser(role)}
+                                                onClick={() => deleteRole(role)}
                                             />
                                         </div>
                                     </MoreActions>
@@ -126,8 +126,8 @@ const Index = () => {
             {showDeleteModal &&
                 <DeleteModal
                     setShowDeleteModal={setShowDeleteModal}
-                    userToDelete={userToDelete}
-                    setUserToDelete={setUserToDelete}
+                    roleToDelete={roleToDelete}
+                    setRoleToDelete={setRoleToDelete}
                 />
             }
             {showBulkDeleteModal &&
