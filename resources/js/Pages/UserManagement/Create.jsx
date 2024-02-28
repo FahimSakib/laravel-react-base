@@ -5,15 +5,17 @@ import ArrowUpTrayMini from '@/Components/Icons/ArrowUpTrayMini'
 import ToggleButton from '@/Components/ToggleButton'
 import Spiner from '@/Components/Utils/Spiner'
 import Layout from '@/Shared/Layout'
-import { useForm } from '@inertiajs/react'
+import { useForm, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
 
 const Create = () => {
+    const { roles } = usePage().props
     const [avatarUrl, setAvatarUrl] = useState('')
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
         phone: '',
+        role_id: '',
         password: '',
         password_confirmation: '',
         avatar: '',
@@ -42,6 +44,8 @@ const Create = () => {
             },
         })
     }
+
+    const rolesOption = roles.map(role => ({ value: role.id, label: role.name }))
 
     return (
         <div className="max-w-7xl mx-auto mt-8 dark:text-[#edf2e7]">
@@ -117,8 +121,11 @@ const Create = () => {
                             <SelectInputLarge
                                 label="Role"
                                 id="role_id"
-                                options={[{ value: 'one', label: 'One' }, { value: 'two', label: 'Two' }]}
+                                options={rolesOption}
+                                value={data.role_id}
+                                onChange={(e) => setData('role_id', e.target.value)}
                             />
+                            <InputError message={errors.role_id} className="mt-2 ml-2" />
                         </div>
                         <div>
                             <TextInput

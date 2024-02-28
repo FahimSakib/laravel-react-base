@@ -8,14 +8,16 @@ import { useForm, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
 import UpdatePassword from './Components/UpdatePassword'
 import InfoBanner from '@/Components/Utils/InfoBanner'
+import SelectInputLarge from '@/Components/Form/SelectInputLarge'
 
 const Edit = () => {
-    const { user } = usePage().props
+    const { user, roles } = usePage().props
     const [avatarUrl, setAvatarUrl] = useState('')
     const { data, setData, post, processing, errors, reset } = useForm({
         name: user.name,
         email: user.email,
         phone: user.phone,
+        role_id: user.role_id,
         avatar: '',
         status: user.status,
         _method: 'put',
@@ -43,6 +45,8 @@ const Edit = () => {
             },
         })
     }
+
+    const rolesOption = roles.map(role => ({ value: role.id, label: role.name }))
 
     return (
         <div className="max-w-7xl mx-auto mt-8 dark:text-[#edf2e7]">
@@ -116,6 +120,16 @@ const Edit = () => {
                                     onChange={(e) => setData('phone', e.target.value)}
                                 />
                                 <InputError message={errors.phone} className="mt-2 ml-2" />
+                            </div>
+                            <div>
+                                <SelectInputLarge
+                                    label="Role"
+                                    id="role_id"
+                                    options={rolesOption}
+                                    value={data.role_id !== null ? data.role_id : ''}
+                                    onChange={(e) => setData('role_id', e.target.value)}
+                                />
+                                <InputError message={errors.role_id} className="mt-2 ml-2" />
                             </div>
                             <div className="flex justify-end">
                                 <button

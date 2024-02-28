@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Rules\MatchPassword;
 use App\Traits\Uploadable;
@@ -17,14 +18,16 @@ class UserManagementController extends Controller
 
     public function index()
     {
-        $users = User::simplePaginate(10);
+        $users = User::with('role:id,name')->simplePaginate(10);
 
         return Inertia::render('UserManagement/Index', compact('users'));
     }
 
     public function create()
     {
-        return Inertia::render('UserManagement/Create');
+        $roles = Role::all();
+
+        return Inertia::render('UserManagement/Create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -32,6 +35,7 @@ class UserManagementController extends Controller
         $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:' . User::class,
+            'role_id'  => 'required',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'avatar'   => 'nullable|file|mimes:jpeg,jpg,png|max:2024'
         ]);
@@ -40,6 +44,7 @@ class UserManagementController extends Controller
             'name'             => $request->name,
             'email'            => $request->email,
             'phone'            => $request->phone,
+            'role_id'          => $request->role_id,
             'password'         => Hash::make($request->password),
             'default_password' => true,
             'status'           => $request->status
@@ -62,27 +67,30 @@ class UserManagementController extends Controller
 
     public function edit(string $id)
     {
-        $user = User::find($id);
+        $user  = User::find($id);
+        $roles = Role::all();
 
-        return Inertia::render('UserManagement/Edit', compact('user'));
+        return Inertia::render('UserManagement/Edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name'   => 'required|string|max:255',
-            'email'  => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignore($id)],
-            'avatar' => 'nullable|file|mimes:jpeg,jpg,png|max:2024'
+            'name'    => 'required|string|max:255',
+            'email'   => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignore($id)],
+            'role_id' => 'required',
+            'avatar'  => 'nullable|file|mimes:jpeg,jpg,png|max:2024'
         ]);
 
         $user          = User::find($id);
         $currentAvatar = $user->avatar;
 
         $data = [
-            'name'   => $request->name,
-            'email'  => $request->email,
-            'phone'  => $request->phone,
-            'status' => $request->status
+            'name'    => $request->name,
+            'email'   => $request->email,
+            'phone'   => $request->phone,
+            'role_id' => $request->role_id,
+            'status'  => $request->status
         ];
 
         if ($request->hasFile('avatar')) {

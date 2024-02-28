@@ -74,6 +74,9 @@ const Index = () => {
                             Phone
                         </Th>
                         <Th>
+                            Role
+                        </Th>
+                        <Th>
                             Status
                         </Th>
                         <Th className="text-right">
@@ -98,6 +101,9 @@ const Index = () => {
                                 </Td>
                                 <Td>
                                     {user.phone}
+                                </Td>
+                                <Td>
+                                    {user.role?.name}
                                 </Td>
                                 <Td>
                                     <Status status={user.status} />
