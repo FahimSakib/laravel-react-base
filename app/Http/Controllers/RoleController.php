@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use App\Models\Role;
+use App\Traits\Permission as TraitsPermission;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class RoleController extends Controller
 {
+    use TraitsPermission;
     /**
      * Display a listing of the resource.
      */
@@ -54,6 +56,10 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
+        if (!$this->check_permission('role-edit')) {
+            return Inertia::render('Error/AccessDenied');
+        }
+
         $permissionsByModule         = Permission::all()->groupBy('module_name');
         $role                        = Role::with('permissions:id,module_name')->find($id);
         $selectedPermissionsByModule = $role->permissions->groupBy('module_name');
