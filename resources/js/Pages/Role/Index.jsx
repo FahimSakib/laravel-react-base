@@ -18,6 +18,7 @@ import MoreActionsButton from '@/Components/Table/MoreActionsButton'
 import SimplePaginate from '@/Components/Paginate/SimplePaginate'
 import useMultiSelect from '@/Hooks/useMultiSelect'
 import BulkDeleteModal from './Components/BulkDeleteModal'
+import usePermission from '@/Hooks/usePermission'
 
 const Index = () => {
     const { roles } = usePage().props
@@ -25,6 +26,7 @@ const Index = () => {
     const [roleToDelete, setRoleToDelete] = useState({})
     const [showBulkDeleteModal, setShowBulkDeleteModal] = useState(false)
     const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect();
+    const [permission] = usePermission()
 
     const deleteRole = (role) => {
         setRoleToDelete({ id: role.id, name: role.name })
@@ -93,17 +95,17 @@ const Index = () => {
                                 <Td>
                                     <MoreActions id={role.id}>
                                         <div>
-                                            <MoreActionsLink
+                                            {permission('role-edit') && <MoreActionsLink
                                                 label="Edit"
                                                 href={route('roles.edit', role.id)}
                                                 icon={<PencilSquareMicroSolid />}
-                                            />
-                                            <MoreActionsButton
+                                            />}
+                                            {permission('role-delete') && < MoreActionsButton
                                                 label="Delete"
                                                 icon={<TrashMicroSolid />}
                                                 className="text-[#ff5630]"
                                                 onClick={() => deleteRole(role)}
-                                            />
+                                            />}
                                         </div>
                                     </MoreActions>
                                 </Td>

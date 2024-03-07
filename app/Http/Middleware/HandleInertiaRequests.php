@@ -44,7 +44,7 @@ class HandleInertiaRequests extends Middleware
                 'error'   => fn () => $request->session()->get('error')
             ],
 
-            // 'rolePermissions' => fn () => $request->user()->load(['role', 'role.permissions'])->role,
+            'role' => fn () => $request->user() ? $request->user()->load(['role:id,name', 'role.permissions:id,permission_slug'])->role : null,
         ]);
     }
 }
