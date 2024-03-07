@@ -41,15 +41,15 @@ const Index = () => {
         <div className="max-w-7xl mx-auto mt-8 dark:text-[#edf2e7]">
             <div className="flex justify-between items-center">
                 <h4 className="text-2xl md:text-3xl font-bold">Roles</h4>
-                <Link
+                {permission('role-create') && <Link
                     href={route('roles.create')}
                     className="flex items-center gap-1 px-5 py-2 rounded-xl text-white font-semibold text-sm bg-[#6366f1] hover:bg-[#4338ca]">
                     <PlusSolid /> Add
-                </Link>
+                </Link>}
             </div>
             <div className="mt-8 rounded-2xl shadow dark:bg-[#111927]">
                 <div className="flex items-center min-h-[48px] pl-3">
-                    {(selectedItems.ids.length > 0) &&
+                    {(selectedItems.ids.length > 0 && permission('role-delete')) &&
                         <button
                             className="flex px-1 py-1.5 gap-1 text-sm text-[#ff5630] rounded-md hover:bg-[#111927]/5 dark:hover:bg-[#edf2f7]/5"
                             onClick={() => setShowBulkDeleteModal(true)}

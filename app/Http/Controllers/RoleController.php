@@ -16,6 +16,10 @@ class RoleController extends Controller
      */
     public function index()
     {
+        if (!$this->check_permission('role-index')) {
+            return Inertia::render('Error/AccessDenied');
+        }
+
         $roles = Role::with('permissions:id')->simplePaginate(10);
 
         return Inertia::render('Role/Index', compact('roles'));
@@ -26,6 +30,10 @@ class RoleController extends Controller
      */
     public function create()
     {
+        if (!$this->check_permission('role-create')) {
+            return Inertia::render('Error/AccessDenied');
+        }
+
         $permissionsByModule = Permission::all()->groupBy('module_name');
 
         return Inertia::render('Role/Create', compact('permissionsByModule'));
