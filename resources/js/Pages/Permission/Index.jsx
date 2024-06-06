@@ -11,7 +11,6 @@ import { Link, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
 import MoreActions from '@/Components/Table/MoreActions'
 import TrashMicroSolid from '@/Components/Icons/TrashMicroSolid'
-import MoreActionsLink from '@/Components/Table/MoreActionsLink'
 import PencilSquareMicroSolid from '@/Components/Icons/PencilSquareMicroSolid'
 import MoreActionsButton from '@/Components/Table/MoreActionsButton'
 import SimplePaginate from '@/Components/Paginate/SimplePaginate'
@@ -19,6 +18,7 @@ import useMultiSelect from '@/Hooks/useMultiSelect'
 import CreateModal from './Components/CreateModal'
 import EditModal from './Components/EditModal'
 import DeleteModal from './Components/DeleteModal'
+import usePermission from '@/Hooks/usePermission'
 
 const Index = () => {
     const { permissions } = usePage().props
@@ -27,7 +27,8 @@ const Index = () => {
     const [permissionToEdit, setPermissionToEdit] = useState({})
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [permissionToDelete, setPermissionToDelete] = useState({})
-    const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect();
+    const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect()
+    const [permission] = usePermission()
 
     const handleSelectAll = (e) => {
         selectAllCheckbox(e, permissions.data.map(user => user.id))
@@ -37,15 +38,15 @@ const Index = () => {
         <div className="max-w-7xl mx-auto mt-8 dark:text-[#edf2e7]">
             <div className="flex justify-between items-center">
                 <h4 className="text-2xl md:text-3xl font-bold">Permissions</h4>
-                <button
+                {permission('permission-create') && <button
                     onClick={() => setShowCreateModal(true)}
                     className="flex items-center gap-1 px-5 py-2 rounded-xl text-white font-semibold text-sm bg-[#6366f1] hover:bg-[#4338ca]">
                     <PlusSolid /> Add
-                </button>
+                </button>}
             </div>
             <div className="mt-8 rounded-2xl shadow dark:bg-[#111927]">
                 <div className="flex items-center min-h-[48px] pl-3">
-                    {(selectedItems.ids.length > 0) &&
+                    {(selectedItems.ids.length > 0 && permission('permission-delete')) &&
                         <button
                             className="flex px-1 py-1.5 gap-1 text-sm text-[#ff5630] rounded-md hover:bg-[#111927]/5 dark:hover:bg-[#edf2f7]/5"
                             onClick={() => { setPermissionToDelete({ ids: selectedItems, type: 'bulk' }); setShowDeleteModal(true) }}
@@ -77,37 +78,37 @@ const Index = () => {
                         </Th>
                     </Thead>
                     <Tbody>
-                        {permissions.data.map(permission => (
-                            <Tr key={permission.id}>
+                        {permissions.data.map(permissionData => (
+                            <Tr key={permissionData.id}>
                                 <Td type='checkbox'>
                                     <TableCheckbox
-                                        onChange={(e) => selectSingleCheckbox(e, permission.id)}
-                                        checked={selectedItems.ids.includes(permission.id)}
+                                        onChange={(e) => selectSingleCheckbox(e, permissionData.id)}
+                                        checked={selectedItems.ids.includes(permissionData.id)}
                                     />
                                 </Td>
                                 <Td className="capitalize">
-                                    {permission.module_name}
+                                    {permissionData.module_name}
                                 </Td>
                                 <Td>
-                                    {permission.permission_name}
+                                    {permissionData.permission_name}
                                 </Td>
                                 <Td>
-                                    {permission.permission_slug}
+                                    {permissionData.permission_slug}
                                 </Td>
                                 <Td>
-                                    <MoreActions id={permission.id}>
+                                    <MoreActions id={permissionData.id}>
                                         <div>
-                                            <MoreActionsButton
+                                            {permission('permission-edit') && <MoreActionsButton
                                                 label="Edit"
                                                 icon={<PencilSquareMicroSolid />}
-                                                onClick={() => { setPermissionToEdit(permission); setShowEditModal(true) }}
-                                            />
-                                            <MoreActionsButton
+                                                onClick={() => { setPermissionToEdit(permissionData); setShowEditModal(true) }}
+                                            />}
+                                            {permission('permission-delete') && <MoreActionsButton
                                                 label="Delete"
                                                 icon={<TrashMicroSolid />}
                                                 className="text-[#ff5630]"
-                                                onClick={() => { setPermissionToDelete({ id: permission.id, type: 'single' }); setShowDeleteModal(true) }}
-                                            />
+                                                onClick={() => { setPermissionToDelete({ id: permissionData.id, type: 'single' }); setShowDeleteModal(true) }}
+                                            />}
                                         </div>
                                     </MoreActions>
                                 </Td>

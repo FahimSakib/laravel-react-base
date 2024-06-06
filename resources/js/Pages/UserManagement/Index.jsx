@@ -20,13 +20,15 @@ import SimplePaginate from '@/Components/Paginate/SimplePaginate'
 import useMultiSelect from '@/Hooks/useMultiSelect'
 import BulkDeleteModal from './Components/BulkDeleteModal'
 import Status from './Components/Status'
+import usePermission from '@/Hooks/usePermission'
 
 const Index = () => {
     const { users } = usePage().props
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [userToDelete, setUserToDelete] = useState({})
     const [showBulkDeleteModal, setShowBulkDeleteModal] = useState(false)
-    const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect();
+    const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect()
+    const [permission] = usePermission()
 
     const deleteUser = (user) => {
         setUserToDelete({ id: user.id, name: user.name })
@@ -41,15 +43,15 @@ const Index = () => {
         <div className="max-w-7xl mx-auto mt-8 dark:text-[#edf2e7]">
             <div className="flex justify-between items-center">
                 <h4 className="text-2xl md:text-3xl font-bold">Users</h4>
-                <Link
+                {permission('user-create') && <Link
                     href={route('users.create')}
                     className="flex items-center gap-1 px-5 py-2 rounded-xl text-white font-semibold text-sm bg-[#6366f1] hover:bg-[#4338ca]">
                     <PlusSolid /> Add
-                </Link>
+                </Link>}
             </div>
             <div className="mt-8 rounded-2xl shadow dark:bg-[#111927]">
                 <div className="flex items-center min-h-[48px] pl-3">
-                    {(selectedItems.ids.length > 0) &&
+                    {(selectedItems.ids.length > 0 && permission('user-delete')) &&
                         <button
                             className="flex px-1 py-1.5 gap-1 text-sm text-[#ff5630] rounded-md hover:bg-[#111927]/5 dark:hover:bg-[#edf2f7]/5"
                             onClick={() => setShowBulkDeleteModal(true)}
@@ -111,17 +113,17 @@ const Index = () => {
                                 <Td>
                                     <MoreActions id={user.id}>
                                         <div>
-                                            <MoreActionsLink
+                                            {permission('user-edit') && <MoreActionsLink
                                                 label="Edit"
                                                 href={route('users.edit', user.id)}
                                                 icon={<PencilSquareMicroSolid />}
-                                            />
-                                            <MoreActionsButton
+                                            />}
+                                            {permission('user-delete') && <MoreActionsButton
                                                 label="Delete"
                                                 icon={<TrashMicroSolid />}
                                                 className="text-[#ff5630]"
                                                 onClick={() => deleteUser(user)}
-                                            />
+                                            />}
                                         </div>
                                     </MoreActions>
                                 </Td>

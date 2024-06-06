@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use App\Rules\MatchPassword;
+use App\Traits\Permission;
 use App\Traits\Uploadable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,10 +15,14 @@ use Illuminate\Validation\Rule;
 
 class UserManagementController extends Controller
 {
-    use Uploadable;
+    use Uploadable, Permission;
 
     public function index()
     {
+        if (!$this->check_permission('user-index')) {
+            return Inertia::render('Error/AccessDenied');
+        }
+
         $users = User::with('role:id,name')->simplePaginate(10);
 
         return Inertia::render('UserManagement/Index', compact('users'));
@@ -25,6 +30,10 @@ class UserManagementController extends Controller
 
     public function create()
     {
+        if (!$this->check_permission('user-create')) {
+            return Inertia::render('Error/AccessDenied');
+        }
+
         $roles = Role::all();
 
         return Inertia::render('UserManagement/Create', compact('roles'));
@@ -32,6 +41,10 @@ class UserManagementController extends Controller
 
     public function store(Request $request)
     {
+        if (!$this->check_permission('user-create')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:' . User::class,
@@ -67,6 +80,10 @@ class UserManagementController extends Controller
 
     public function edit(string $id)
     {
+        if (!$this->check_permission('user-edit')) {
+            return Inertia::render('Error/AccessDenied');
+        }
+
         $user  = User::find($id);
         $roles = Role::all();
 
@@ -75,6 +92,10 @@ class UserManagementController extends Controller
 
     public function update(Request $request, string $id)
     {
+        if (!$this->check_permission('user-edit')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         $request->validate([
             'name'    => 'required|string|max:255',
             'email'   => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignore($id)],
@@ -109,6 +130,10 @@ class UserManagementController extends Controller
 
     public function destroy(string $id)
     {
+        if (!$this->check_permission('user-delete')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         $user   = User::find($id);
         $avatar = $user->avatar;
 
@@ -123,6 +148,10 @@ class UserManagementController extends Controller
 
     public function UpdatePassword(Request $request, string $id)
     {
+        if (!$this->check_permission('user-edit')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         $user = User::find($id);
 
         $request->validate([
@@ -141,6 +170,10 @@ class UserManagementController extends Controller
 
     public function bulkDelete(Request $request)
     {
+        if (!$this->check_permission('user-delete')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         $users = User::whereIn('id', $request['ids'])->get();
 
         foreach ($users as $user) {

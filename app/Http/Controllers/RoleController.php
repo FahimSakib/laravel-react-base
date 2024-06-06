@@ -11,6 +11,7 @@ use Inertia\Inertia;
 class RoleController extends Controller
 {
     use TraitsPermission;
+
     /**
      * Display a listing of the resource.
      */
@@ -44,6 +45,10 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$this->check_permission('role-create')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         $role = Role::create(['name' => $request['name']]);
 
         $role->permissions()->sync($request['permission_ids']);
@@ -80,6 +85,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!$this->check_permission('role-edit')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         $role = Role::find($id);
 
         $role->update(['name' => $request['name']]);
@@ -93,6 +102,10 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!$this->check_permission('role-delete')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         Role::find($id)->delete();
 
         return redirect()->back()->with('success', 'Role deleted successfully');
@@ -100,6 +113,10 @@ class RoleController extends Controller
 
     public function bulkDelete(Request $request)
     {
+        if (!$this->check_permission('role-delete')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         Role::whereIn('id', $request['ids'])->delete();
 
         return redirect()->back()->with('success', (count($request['ids']) > 1 ? 'Roles' : 'Role') . ' deleted successfully');

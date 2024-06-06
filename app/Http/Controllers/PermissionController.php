@@ -3,17 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Traits\Permission as TraitsPermission;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PermissionController extends Controller
 {
+    use TraitsPermission;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        if (!$this->check_permission('permission-index')) {
+            return Inertia::render('Error/AccessDenied');
+        }
+
         $permissions = Permission::simplePaginate(10);
 
         return Inertia::render('Permission/Index', compact('permissions'));
@@ -32,6 +39,10 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$this->check_permission('permission-create')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         foreach ($request['permissionNamesSlugs'] as $key => $permission) {
             $data[] = [
                 'module_name'     => strtolower($request->module_name),
@@ -67,6 +78,10 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!$this->check_permission('permission-edit')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         $request->validate([
             'module_name'     => 'required',
             'permission_name' => 'required',
@@ -85,6 +100,10 @@ class PermissionController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!$this->check_permission('permission-delete')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         Permission::find($id)->delete();
 
         return redirect()->back()->with('success', 'Permission deleted successfully');
@@ -92,6 +111,10 @@ class PermissionController extends Controller
 
     public function bulkDelete(Request $request)
     {
+        if (!$this->check_permission('permission-delete')) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
         Permission::whereIn('id', $request['ids'])->delete();
 
         return redirect()->back()->with('success', (count($request['ids']) > 1 ? 'Permissions' : 'Permission') . ' deleted successfully');

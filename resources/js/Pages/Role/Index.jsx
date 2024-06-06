@@ -25,7 +25,7 @@ const Index = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [roleToDelete, setRoleToDelete] = useState({})
     const [showBulkDeleteModal, setShowBulkDeleteModal] = useState(false)
-    const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect();
+    const [selectedItems, setSelectedItems, selectSingleCheckbox, selectAllCheckbox, isAllChecked] = useMultiSelect()
     const [permission] = usePermission()
 
     const deleteRole = (role) => {

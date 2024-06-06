@@ -1,12 +1,11 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserManagementController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
@@ -21,10 +20,7 @@ use Inertia\Inertia;
 require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Dashboard/Index');
-    })->name('dashboard');
-
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::patch('update-dark-mode', [ProfileController::class, 'updateDarkMode'])->name('update.dark.mode');
     Route::resource('users', UserManagementController::class);
     Route::patch('users/{user}/update-password', [UserManagementController::class, 'UpdatePassword'])->name('users.update.password');

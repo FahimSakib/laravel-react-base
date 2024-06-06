@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait Permission
 {
-    public function check_permission($name)
+    public function check_permission($permissionSlug)
     {
         $role = auth()->user()->load(['role:id,name', 'role.permissions:id,permission_slug'])->role;
 
@@ -20,6 +20,6 @@ trait Permission
             return $item->permission_slug;
         });
 
-        return $permissions->contains($name);
+        return $permissions->contains($permissionSlug);
     }
 }
