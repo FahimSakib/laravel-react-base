@@ -21,3 +21,34 @@ The Laravel React Base project is a robust web application boilerplate that comb
 - **Tailwind CSS**
 
 This project emphasizes a cohesive and efficient user interface, supported by custom-made designs that enhance both functionality and aesthetics without relying on external libraries.
+
+### Installing
+*Clone project from GitHub*
+
+`git clone https://github.com/FahimSakib/laravel-react-base.git`
+
+*Navigate to the directory and install composer*
+
+`composer install`
+
+*Install pnpm*
+
+`pnpm install`
+
+*Copy .env.example and make .env file*
+
+`cp .env.example .env`
+
+*Generate app key*
+
+`php artisan key:generate`
+
+*Run migrations and seeding*
+
+`php artisan migrate --seed`
+
+*Run project*
+
+`php artisan serve` and `pnpm dev`
+
+*Note: Even if you register a user, you will be unable to utilise the application unless you seed the database. After seeding, you can login with the email "admin@mail.com" and password "password"; this default user is set to super admin.*
